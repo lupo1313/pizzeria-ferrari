@@ -217,37 +217,60 @@
     injectIcons(el);
   }
 
-  /* ---- Avis Google (réels) ---- */
+  /* ---- Avis Google (réels, carrousel horizontal) ---- */
+  const GOOGLE_G = '<svg class="g-logo" viewBox="0 0 48 48" width="16" height="16" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.9 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.6 6.1 29.6 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.3-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 16 19 12 24 12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.6 6.1 29.6 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35 26.7 36 24 36c-5.3 0-9.7-3.1-11.3-7.4l-6.5 5C9.6 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.1-4.1 5.6l6.2 5.2C39.7 36.3 44 30.7 44 24c0-1.3-.1-2.3-.4-3.5z"/></svg>';
+
   function renderReviews(cfg) {
     const el = $("#reviews-js"); if (!el) return;
     const r = (cfg && cfg.rating) || {}, list = (cfg && cfg.reviews) || [];
     const profile = (cfg && cfg.google_profile_url) || (cfg && cfg.google_review_url) || "#";
     const review = (cfg && cfg.google_review_url) || "#";
-    let head = `<div class="reviews-head">
+    const head = `<div class="reviews-head">
       <div class="rev-score">
         ${r.value ? `<span class="rev-score-num">${esc(r.value)}</span>` : ""}
         <div class="rev-score-meta">
           <div class="rev-stars" aria-hidden="true">${r.value ? stars(parseFloat(String(r.value).replace(",", "."))) : "★★★★★"}</div>
-          <div class="rev-count">${r.count ? esc(r.count) + " avis " : ""}${esc(r.source || "Google")}</div>
+          <div class="rev-count">${GOOGLE_G}<span>${r.count ? esc(r.count) + " avis · " : ""}Google</span></div>
         </div>
       </div>
       <a href="${esc(profile)}" class="btn btn--line btn--sm" target="_blank" rel="noopener">Voir tous les avis</a>
     </div>`;
-    let body;
-    if (list.length) {
-      body = `<div class="reviews-grid">` + list.map(rv => `
-        <figure class="rev-card reveal">
-          <div class="rev-stars" aria-hidden="true">${stars(rv.rating)}</div>
-          <blockquote class="rev-quote">${esc(rv.text)}</blockquote>
-          <figcaption><span class="rev-author">${esc(rv.author)}</span>${rv.date ? ` <span class="rev-meta">· ${esc(rv.date)}</span>` : ""}</figcaption>
-        </figure>`).join("") + `</div>`;
-    } else {
-      body = `<div class="reviews-empty">
+    if (!list.length) {
+      el.innerHTML = head + `<div class="reviews-empty">
         <p>Nos clients nous notent sur Google. Une sélection sera bientôt mise en avant ici — en attendant, allez y jeter un œil.</p>
         <a href="${esc(review)}" class="btn btn--primary" target="_blank" rel="noopener">Laisser un avis</a>
       </div>`;
+      return;
     }
-    el.innerHTML = head + body;
+    const cards = list.map(rv => {
+      const initial = esc((rv.author || "?").trim().charAt(0).toUpperCase());
+      return `<figure class="rev-card">
+        <div class="rev-card-top">
+          <span class="rev-avatar" aria-hidden="true">${initial}</span>
+          <div class="rev-id"><span class="rev-author">${esc(rv.author)}</span>${rv.date ? `<span class="rev-meta">${esc(rv.date)}</span>` : ""}</div>
+          <span class="rev-g" title="Avis Google">${GOOGLE_G}</span>
+        </div>
+        <div class="rev-stars" aria-hidden="true">${stars(rv.rating)}</div>
+        <blockquote class="rev-quote">${esc(rv.text)}</blockquote>
+      </figure>`;
+    }).join("");
+    const dots = list.map((_, i) => `<button type="button" class="rev-dot${i === 0 ? " active" : ""}" data-i="${i}" aria-label="Aller à l'avis ${i + 1}"></button>`).join("");
+    el.innerHTML = head + `<div class="rev-rail-wrap"><div class="rev-rail" id="rev-rail">${cards}</div><div class="rev-dots" id="rev-dots">${dots}</div></div>`;
+    initReviewRail();
+  }
+
+  function initReviewRail() {
+    const rail = $("#rev-rail"), dotsWrap = $("#rev-dots"); if (!rail || !dotsWrap) return;
+    const cards = $$(".rev-card", rail), dots = $$(".rev-dot", dotsWrap);
+    dots.forEach(d => d.addEventListener("click", () => {
+      const c = cards[+d.dataset.i]; if (c) c.scrollIntoView({ behavior: "smooth", inline: "start", block: "nearest" });
+    }));
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver(es => {
+        es.forEach(e => { if (e.isIntersecting) { const i = cards.indexOf(e.target); dots.forEach((d, j) => d.classList.toggle("active", j === i)); } });
+      }, { root: rail, threshold: 0.6 });
+      cards.forEach(c => io.observe(c));
+    }
   }
 
   /* ---- Livraison ---- */

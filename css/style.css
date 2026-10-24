@@ -517,3 +517,38 @@ body.nav-open .mobile-cta{opacity:0;pointer-events:none;}
 
 /* Avis : la grille s'adapte au nombre d'avis */
 .reviews-grid{grid-auto-rows:1fr;}
+
+/* =========================================================
+   Avis Google — carrousel horizontal
+   ========================================================= */
+.reviews-head{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:30px;}
+.rev-score{display:flex;align-items:center;gap:16px;}
+.rev-score-num{font-family:var(--ff-display);font-weight:900;font-size:3rem;color:var(--ink);line-height:1;}
+.rev-score-meta .rev-stars{color:#fbbc04;font-size:1.05rem;letter-spacing:.06em;}
+.rev-count{display:inline-flex;align-items:center;gap:6px;color:var(--muted);font-size:.9rem;margin-top:4px;}
+.g-logo{display:block;flex:none;}
+
+.rev-rail-wrap{position:relative;}
+.rev-rail{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(300px,330px);gap:20px;overflow-x:auto;
+  scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;
+  margin:0 calc(var(--gutter) * -1);padding:4px var(--gutter) 6px;}
+.rev-rail::-webkit-scrollbar{display:none;}
+.rev-card{scroll-snap-align:start;background:#fff;border:1px solid rgba(32,28,24,.08);border-radius:16px;
+  padding:24px;box-shadow:0 14px 34px -22px rgba(0,0,0,.4);display:flex;flex-direction:column;margin:0;}
+.rev-card-top{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+.rev-avatar{width:44px;height:44px;border-radius:50%;background:var(--dark);color:#fff;flex:none;
+  display:grid;place-items:center;font-family:var(--ff-display);font-weight:600;font-size:1.15rem;}
+.rev-id{display:flex;flex-direction:column;min-width:0;}
+.rev-card .rev-author{font-weight:600;color:var(--ink);font-size:.98rem;}
+.rev-card .rev-meta{color:var(--muted);font-size:.8rem;}
+.rev-g{margin-left:auto;flex:none;}
+.rev-card .rev-stars{color:#fbbc04;font-size:1.05rem;letter-spacing:.05em;margin-bottom:12px;}
+.rev-card .rev-quote{font-family:var(--ff);font-weight:400;font-size:.98rem;line-height:1.55;color:#413c33;margin:0;}
+.rev-dots{display:flex;gap:8px;justify-content:center;margin-top:24px;}
+.rev-dot{width:8px;height:8px;border-radius:50%;background:rgba(32,28,24,.2);border:0;padding:0;cursor:pointer;transition:background .25s var(--ease),width .25s var(--ease);}
+.rev-dot.active{background:var(--red);width:22px;border-radius:5px;}
+.rev-dot:hover{background:rgba(32,28,24,.4);}
+@media (max-width:560px){
+  .rev-rail{grid-auto-columns:85%;}
+  .rev-score-num{font-size:2.4rem;}
+}
