@@ -143,8 +143,8 @@ function header(active) {
       ${navHtml(active)}
     </nav>
     <div class="header-cta">
-      <a href="tel:+33491428602" class="btn btn-red btn-order-header">
-        <span class="btn-ico" aria-hidden="true">${ICON.phone}</span><span>Commander</span>
+      <a href="tel:+33491428602" class="btn btn--primary btn-order-header">
+        <span class="ico" aria-hidden="true">${ICON.phone}</span><span>Commander</span>
       </a>
     </div>
     <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="main-nav">
@@ -165,7 +165,7 @@ function footer(active) {
       </picture>
       <p>La tradition du feu de bois depuis 1980.<br>Pizzeria familiale à Marseille 5e.</p>
       <div class="footer-social">
-        <a href="https://g.page/r/CZF5BZ4UyT6UEBM/review" target="_blank" rel="noopener" class="btn btn-ghost-light btn-sm">Avis Google</a>
+        <a href="https://g.page/r/CZF5BZ4UyT6UEBM/review" target="_blank" rel="noopener" class="btn btn--light btn--sm">Avis Google</a>
       </div>
     </div>
     <nav class="footer-nav" aria-label="Pied de page">

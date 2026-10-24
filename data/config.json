@@ -31,7 +31,8 @@
     "uber_eats_url": "https://www.ubereats.com/fr/search?q=Pizzeria%20Ferrari%20Marseille",
     "deliveroo_url": "https://deliveroo.fr/fr/search?q=Pizzeria%20Ferrari%20Marseille"
   },
-  "rating": { "value": "", "count": "" },
+  "rating": { "value": "3,7", "count": "51", "source": "Google" },
   "reviews": [],
+  "_reviews_note": "reviews = vrais avis Google a coller ici : { \"author\": \"Prenom N.\", \"rating\": 5, \"text\": \"extrait fidele\", \"date\": \"2025\" }. Ne jamais inventer. La note globale (rating) est la vraie note Google au 24/10/2026.",
   "_notes": "A VERIFIER / COMPLETER PAR FABIEN : (1) liens Uber Eats / Deliveroo = liens de recherche provisoires, a remplacer par les URL exactes de la fiche Ferrari sur chaque plateforme. (2) google_profile_url a confirmer. (3) le lecteur de carte utilise l'adresse exacte, verifier que le pin Google tombe bien sur le resto."
 }

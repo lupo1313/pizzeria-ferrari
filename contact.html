@@ -49,8 +49,8 @@
       <a href="contact.html" aria-current="page" class="is-active">Contact</a>
     </nav>
     <div class="header-cta">
-      <a href="tel:+33491428602" class="btn btn-red btn-order-header">
-        <span class="btn-ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.1-1.1a2 2 0 0 1 2.1-.5c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.7 2Z"/></svg></span><span>Commander</span>
+      <a href="tel:+33491428602" class="btn btn--primary btn-order-header">
+        <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.1-1.1a2 2 0 0 1 2.1-.5c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.7 2Z"/></svg></span><span>Commander</span>
       </a>
     </div>
     <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="main-nav">
@@ -59,57 +59,40 @@
   </div>
 </header>
 <main id="main">
-  <!-- PAGE HERO -->
-  <section class="page-hero">
+  <section class="page-head">
     <div class="container">
-      <nav class="breadcrumb" aria-label="Fil d'Ariane">
-        <a href="index.html">Accueil</a> <span aria-hidden="true">›</span> <span>Contact</span>
-      </nav>
-      <p class="eyebrow light">Informations pratiques</p>
-      <h1 class="page-hero-title">Contact &amp; accès</h1>
-      <p class="page-hero-sub">Pizzeria Ferrari, 178 rue Ferrari, 13005 Marseille. Appelez-nous pour commander, passez sur place ou faites-vous livrer.</p>
+      <nav class="breadcrumb" aria-label="Fil d'Ariane"><a href="index.html">Accueil</a> <span aria-hidden="true">/</span> Contact</nav>
+      <span class="sec-index">Contact &amp; accès</span>
+      <h1 class="page-title">Nous trouver</h1>
+      <p class="page-sub">178 rue Ferrari, 13005 Marseille. Appelez pour commander, passez sur place ou faites-vous livrer.</p>
     </div>
   </section>
 
-  <!-- CONTACT -->
-  <section class="section contact" id="contact">
-    <div class="container contact-inner">
-      <div class="contact-info">
+  <section class="section contact">
+    <div class="container contact-grid">
+      <div class="contact-col">
         <div id="openclosed" class="openclosed" hidden></div>
-        <ul class="contact-list">
-          <li>
-            <span class="ci-ico" data-ico="pin" aria-hidden="true"></span>
-            <span><strong>Pizzeria Ferrari</strong><br>178 rue Ferrari, 13005 Marseille</span>
-          </li>
-          <li>
-            <span class="ci-ico" data-ico="phone" aria-hidden="true"></span>
-            <span><a href="tel:+33491428602">04 91 42 86 02</a></span>
-          </li>
-          <li>
-            <span class="ci-ico" data-ico="clock" aria-hidden="true"></span>
-            <span><strong>Horaires</strong><br>Tous les jours, 18h00 - 22h30</span>
-          </li>
+        <ul class="c-list">
+          <li class="c-line"><span class="c-label">Adresse</span><span class="c-value">178 rue Ferrari, 13005 Marseille</span></li>
+          <li class="c-line"><span class="c-label">Téléphone</span><span class="c-value"><a href="tel:+33491428602">04 91 42 86 02</a></span></li>
+          <li class="c-line"><span class="c-label">Horaires</span><span class="c-value">Tous les jours, 18h00 – 22h30</span></li>
         </ul>
-
         <div class="contact-actions">
-          <a href="tel:+33491428602" class="btn btn-red"><span class="ico" data-ico="phone" aria-hidden="true"></span> Appeler</a>
-          <a href="https://www.google.com/maps/dir/?api=1&destination=178+rue+Ferrari+13005+Marseille" class="btn btn-ghost-light" target="_blank" rel="noopener"><span class="ico" data-ico="route" aria-hidden="true"></span> Itinéraire</a>
+          <a href="tel:+33491428602" class="btn btn--primary"><span class="ico" data-ico="phone" aria-hidden="true"></span> Appeler</a>
+          <a href="https://www.google.com/maps/dir/?api=1&destination=178+rue+Ferrari+13005+Marseille" class="btn btn--line" target="_blank" rel="noopener"><span class="ico" data-ico="route" aria-hidden="true"></span> Itinéraire</a>
         </div>
-
-        <div class="delivery-block">
-          <h2>Livraison</h2>
+        <div class="delivery">
+          <h3>Livraison</h3>
           <p>La livraison est offerte. Commandez par téléphone ou via vos applications habituelles.</p>
           <div class="delivery-links" id="delivery-links"></div>
         </div>
       </div>
 
       <div class="contact-map">
-        <div class="map-lazy" id="map-lazy"
-             data-src="https://maps.google.com/maps?q=178%20rue%20Ferrari%2013005%20Marseille&t=&z=16&ie=UTF8&iwloc=&output=embed">
-          <div class="map-lazy-inner">
-            <span class="ico-lg" data-ico="pin" aria-hidden="true"></span>
+        <div class="map-lazy" id="map-lazy" data-src="https://maps.google.com/maps?q=178%20rue%20Ferrari%2013005%20Marseille&t=&z=16&ie=UTF8&iwloc=&output=embed">
+          <div>
             <p><strong>178 rue Ferrari, 13005 Marseille</strong></p>
-            <button type="button" class="btn btn-gold" id="map-load-btn">Afficher la carte</button>
+            <button type="button" class="btn btn--light" id="map-load-btn">Afficher la carte</button>
             <p class="map-privacy">En affichant la carte, vous acceptez le dépôt de cookies par Google Maps.</p>
           </div>
         </div>
@@ -128,7 +111,7 @@
       </picture>
       <p>La tradition du feu de bois depuis 1980.<br>Pizzeria familiale à Marseille 5e.</p>
       <div class="footer-social">
-        <a href="https://g.page/r/CZF5BZ4UyT6UEBM/review" target="_blank" rel="noopener" class="btn btn-ghost-light btn-sm">Avis Google</a>
+        <a href="https://g.page/r/CZF5BZ4UyT6UEBM/review" target="_blank" rel="noopener" class="btn btn--light btn--sm">Avis Google</a>
       </div>
     </div>
     <nav class="footer-nav" aria-label="Pied de page">
