@@ -1,0 +1,35 @@
+{
+  "name": "Pizzeria Ferrari",
+  "baseline": "La tradition du feu de bois depuis 1980",
+  "since": 1980,
+  "phone_display": "04 91 42 86 02",
+  "phone_tel": "+33491428602",
+  "address": {
+    "street": "178 rue Ferrari",
+    "postal_code": "13005",
+    "city": "Marseille",
+    "country": "France",
+    "full": "178 rue Ferrari, 13005 Marseille"
+  },
+  "website": "https://www.pizzaferrari.fr",
+  "hours_short": "7j/7 de 18h00 à 22h30",
+  "hours": [
+    { "day": "Lundi", "value": "18h00 - 22h30" },
+    { "day": "Mardi", "value": "18h00 - 22h30" },
+    { "day": "Mercredi", "value": "18h00 - 22h30" },
+    { "day": "Jeudi", "value": "18h00 - 22h30" },
+    { "day": "Vendredi", "value": "18h00 - 22h30" },
+    { "day": "Samedi", "value": "18h00 - 22h30" },
+    { "day": "Dimanche", "value": "18h00 - 22h30" }
+  ],
+  "google_review_url": "https://g.page/r/CZF5BZ4UyT6UEBM/review",
+  "google_profile_url": "https://share.google/ZJxFsEv9wNh0HJPlC",
+  "maps_directions_url": "https://www.google.com/maps/dir/?api=1&destination=178+rue+Ferrari+13005+Marseille",
+  "maps_embed_url": "https://maps.google.com/maps?q=178%20rue%20Ferrari%2013005%20Marseille&t=&z=16&ie=UTF8&iwloc=&output=embed",
+  "delivery": {
+    "livraison_offerte": true,
+    "uber_eats_url": "https://www.ubereats.com/fr/search?q=Pizzeria%20Ferrari%20Marseille",
+    "deliveroo_url": "https://deliveroo.fr/fr/search?q=Pizzeria%20Ferrari%20Marseille"
+  },
+  "_notes": "A VERIFIER / COMPLETER PAR FABIEN : (1) liens Uber Eats / Deliveroo = liens de recherche provisoires, a remplacer par les URL exactes de la fiche Ferrari sur chaque plateforme. (2) google_profile_url a confirmer. (3) le lecteur de carte utilise l'adresse exacte, verifier que le pin Google tombe bien sur le resto."
+}

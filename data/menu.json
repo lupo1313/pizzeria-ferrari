@@ -1,0 +1,95 @@
+{
+  "currency": "€",
+  "offers": [
+    {
+      "title": "Carte de fidélité",
+      "detail": "10 points = 1 pizza offerte (anchois ou fromage)."
+    },
+    {
+      "title": "3 pizzas achetées",
+      "detail": "1 boisson offerte, ou la 4ème pizza au choix offerte."
+    },
+    {
+      "title": "Livraison offerte",
+      "detail": "La livraison est offerte sur vos commandes."
+    }
+  ],
+  "featured": ["anchois", "chorizo", "royale", "ferrari", "quatre-fromages", "mexicaine"],
+  "categories": [
+    {
+      "id": "tomate",
+      "label": "Base tomate",
+      "icon": "🍅",
+      "count_note": "22 pizzas",
+      "pizzas": [
+        { "id": "fromage", "name": "Fromage", "ingredients": "Emmental, sauce tomate, olives", "price": 10 },
+        { "id": "anchois", "name": "Anchois", "ingredients": "Sauce tomate, anchois, olives, persillade", "price": 10, "img": "assets/img/p-anchois.webp" },
+        { "id": "fromage-anchois", "name": "Fromage / Anchois", "ingredients": "Emmental, sauce tomate, anchois, olives, persillade", "price": 11 },
+        { "id": "mozzarella", "name": "Mozzarella", "ingredients": "Sauce tomate, mozzarella, olives", "price": 11 },
+        { "id": "jambon", "name": "Jambon", "ingredients": "Sauce tomate, jambon, emmental, olives", "price": 11 },
+        { "id": "chorizo", "name": "Chorizo", "ingredients": "Sauce tomate, chorizo, emmental, olives", "price": 11, "img": "assets/img/p-chorizo.webp" },
+        { "id": "figatelli", "name": "Figatelli", "ingredients": "Sauce tomate, figatelli, emmental, olives", "price": 11 },
+        { "id": "thon", "name": "Thon", "ingredients": "Sauce tomate, thon, emmental, olives", "price": 11 },
+        { "id": "chevre", "name": "Chèvre", "ingredients": "Sauce tomate, chèvre, emmental, olives", "price": 11 },
+        { "id": "champignons", "name": "Champignons", "ingredients": "Sauce tomate, champignons, emmental, olives", "price": 12 },
+        { "id": "royale", "name": "Royale", "ingredients": "Sauce tomate, jambon, champignons, emmental, olives", "price": 12, "img": "assets/img/p-royale.webp" },
+        { "id": "pesto", "name": "Pesto", "ingredients": "Sauce tomate, pesto, emmental, olives", "price": 12 },
+        { "id": "corse", "name": "Corse", "ingredients": "Sauce tomate, figatelli, brousse, emmental, olives", "price": 12 },
+        { "id": "parmesane", "name": "Parmesane", "ingredients": "Sauce tomate, aubergines marinées, parmesan, emmental, olives", "price": 12 },
+        { "id": "napolitaine", "name": "Napolitaine", "ingredients": "Sauce tomate, anchois, câpres, emmental, olives", "price": 12 },
+        { "id": "3-fromages-tomate", "name": "3 Fromages", "ingredients": "Sauce tomate, roquefort, mozzarella, emmental, olives", "price": 13 },
+        { "id": "4-fromages-tomate", "name": "4 Fromages", "ingredients": "Sauce tomate, roquefort, chèvre, mozzarella, emmental, olives", "price": 13, "img": "assets/img/p-quatre-fromages.webp" },
+        { "id": "vegetarienne", "name": "Végétarienne", "ingredients": "Sauce tomate, aubergines, poivrons, oignons, champignons, emmental, olives", "price": 13 },
+        { "id": "provencale", "name": "Provençale", "ingredients": "Sauce tomate, pesto, tomates fraîches, ail, emmental, olives", "price": 13 },
+        { "id": "mexicaine", "name": "Mexicaine", "ingredients": "Sauce tomate, poivrons, oignons, chorizo, emmental, olives", "price": 14, "img": "assets/img/p-mexicaine.webp" },
+        { "id": "armenienne", "name": "Arménienne", "ingredients": "Sauce tomate, viande hachée, poivrons, oignons, olives", "price": 14, "note": "À commander avant 12h" },
+        { "id": "mediterraneenne-tomate", "name": "Méditerranéenne", "ingredients": "Sauce tomate, fruits de mer, ail, persil, huile d'olive, olives", "price": 14, "note": "À commander avant 12h" }
+      ]
+    },
+    {
+      "id": "creme",
+      "label": "Base crème fraîche",
+      "icon": "🤍",
+      "count_note": "13 pizzas",
+      "pizzas": [
+        { "id": "chevre-miel", "name": "Chèvre Miel", "ingredients": "Crème fraîche, chèvre, miel, emmental", "price": 12 },
+        { "id": "lorraine", "name": "Lorraine", "ingredients": "Crème fraîche, lardons, oignons, emmental", "price": 12 },
+        { "id": "ferrari", "name": "Ferrari", "ingredients": "Crème fraîche, jambon, brousse, emmental, olives", "price": 12, "img": "assets/img/p-ferrari.webp", "signature": true },
+        { "id": "poulet", "name": "Poulet", "ingredients": "Crème fraîche, poulet, champignons, emmental", "price": 12 },
+        { "id": "3-fromages-creme", "name": "3 Fromages", "ingredients": "Crème fraîche, chèvre, roquefort, mozzarella", "price": 12 },
+        { "id": "curry", "name": "Curry", "ingredients": "Crème fraîche, poulet, curry, oignons, emmental, olives", "price": 13 },
+        { "id": "kebab", "name": "Kebab", "ingredients": "Crème fraîche, kebab, oignons, emmental, olives", "price": 13 },
+        { "id": "creme-fermiere", "name": "Crème Fermière", "ingredients": "Crème fraîche, jambon, champignons, emmental, olives", "price": 13 },
+        { "id": "tartiflette", "name": "Tartiflette", "ingredients": "Crème fraîche, lardons, oignons, reblochon, pommes de terre, emmental, olives", "price": 13 },
+        { "id": "paysanne", "name": "Paysanne", "ingredients": "Crème fraîche, lardons, champignons, œuf, emmental", "price": 13 },
+        { "id": "corsoise", "name": "Corsoise", "ingredients": "Crème fraîche, figatelli, brousse, emmental, olives", "price": 13 },
+        { "id": "4-fromages-creme", "name": "4 Fromages", "ingredients": "Crème fraîche, roquefort, chèvre, mozzarella, emmental, olives", "price": 13 },
+        { "id": "mediterraneenne-creme", "name": "Méditerranéenne", "ingredients": "Crème fraîche, fruits de mer, ail, persil, huile d'olive, olives", "price": 14, "note": "À commander avant 12h" }
+      ]
+    }
+  ],
+  "special": {
+    "name": "Pizza Burger",
+    "ingredients": "Sauce tomate, viande hachée du boucher, cheddar, sauce burger",
+    "price": 14
+  },
+  "desserts": [
+    { "name": "Pizza Nutella", "ingredients": "Nutella, crème fraîche", "price": 10 },
+    { "name": "Pizza Nutella M&M's", "ingredients": "Nutella, crème fraîche", "price": 10 },
+    { "name": "Pizza Nutella Banane", "ingredients": "Nutella, crème fraîche", "price": 10 },
+    { "name": "Pizza Nutella Noix de coco", "ingredients": "Nutella, crème fraîche", "price": 10 },
+    { "name": "Tiramisu", "ingredients": "", "price": 3 },
+    { "name": "Tarte au daim", "ingredients": "", "price": 3 }
+  ],
+  "drinks": [
+    { "name": "Sodas", "detail": "33 cl", "price": 2 },
+    { "name": "Soda", "detail": "1 L", "price": 4 },
+    { "name": "Eau", "detail": "50 cl", "price": 1.5 },
+    { "name": "Bière", "detail": "25 cl", "price": 2.5 }
+  ],
+  "wines": [
+    { "name": "Vin rouge", "detail": "75 cl", "price": 7 },
+    { "name": "Vin rosé", "detail": "75 cl", "price": 7 },
+    { "name": "Vin blanc", "detail": "75 cl", "price": 7 }
+  ]
+}
