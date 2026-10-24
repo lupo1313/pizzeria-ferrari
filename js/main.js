@@ -117,6 +117,23 @@
     });
   }
 
+  /* ---- Footer : accordéon sur mobile ---- */
+  function initFooterAccordion() {
+    const isMobile = () => window.matchMedia("(max-width:640px)").matches;
+    $$(".footer-col-toggle").forEach(btn => {
+      const col = btn.closest(".footer-col");
+      if (isMobile()) { col.classList.remove("open"); btn.setAttribute("aria-expanded", "false"); }
+      btn.addEventListener("click", () => {
+        if (!isMobile()) return;
+        const open = col.classList.toggle("open");
+        btn.setAttribute("aria-expanded", String(open));
+      });
+    });
+    window.addEventListener("resize", () => {
+      if (!isMobile()) $$(".footer-col-toggle").forEach(b => b.setAttribute("aria-expanded", "true"));
+    });
+  }
+
   /* ---- Réseaux sociaux (placeholders tant que les comptes ne sont pas fournis) ---- */
   function renderSocial(cfg) {
     const el = $("#footer-social"); if (!el) return;
@@ -263,6 +280,7 @@
   openClosed();
   initSubmenu();
   initFaq();
+  initFooterAccordion();
   fab();
 
   Promise.all([

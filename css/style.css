@@ -488,3 +488,32 @@ body.nav-open .mobile-cta{opacity:0;pointer-events:none;}
   .perk{grid-template-columns:1fr;gap:4px;}
   .perk-k{font-size:1.1rem;}
 }
+
+/* =========================================================
+   Hero enrichi + footer accordéon + avis
+   ========================================================= */
+.hero-eyebrow{font-family:var(--ff);font-weight:700;text-transform:uppercase;letter-spacing:.2em;font-size:.78rem;color:#e7c86b;margin:0 0 16px;text-shadow:0 2px 14px rgba(0,0,0,.85);}
+.hero-meta{margin:22px 0 0;color:#efe7d9;font-size:.88rem;letter-spacing:.02em;text-shadow:0 1px 10px rgba(0,0,0,.8);}
+
+/* Footer : en-têtes repliables (accordéon mobile) */
+.footer-col-h{margin:0 0 16px;font-size:inherit;}
+.footer-col-toggle{display:flex;width:100%;align-items:center;justify-content:space-between;gap:10px;
+  background:none;border:0;padding:0;cursor:default;text-align:left;
+  font-family:var(--ff);font-weight:700;font-size:.72rem;text-transform:uppercase;letter-spacing:.18em;color:#fff;}
+.footer-col-toggle::after{content:"";width:9px;height:9px;border-right:2px solid var(--muted-light);border-bottom:2px solid var(--muted-light);
+  transform:rotate(45deg);transition:transform .25s var(--ease);display:none;flex:none;}
+
+@media (max-width:640px){
+  .footer-grid{grid-template-columns:1fr;gap:0;}
+  .footer-brand{grid-column:auto;padding-bottom:26px;}
+  .footer-col:not(.footer-brand){border-top:1px solid rgba(255,255,255,.08);}
+  .footer-col-h{margin:0;}
+  .footer-col-toggle{padding:18px 0;cursor:pointer;}
+  .footer-col-toggle::after{display:block;}
+  .footer-col.open .footer-col-toggle::after{transform:rotate(-135deg);}
+  .footer-col-body{max-height:0;overflow:hidden;transition:max-height .32s var(--ease);}
+  .footer-col.open .footer-col-body{max-height:420px;padding-bottom:20px;}
+}
+
+/* Avis : la grille s'adapte au nombre d'avis */
+.reviews-grid{grid-auto-rows:1fr;}

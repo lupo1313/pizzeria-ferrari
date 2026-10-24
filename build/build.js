@@ -190,19 +190,25 @@ function footer(active) {
       <p>La tradition du feu de bois depuis 1980.<br>Pizzeria familiale à Marseille 5e.</p>
       <div class="footer-social" id="footer-social"></div>
     </div>
-    <nav class="footer-nav" aria-label="Pied de page">
-      <h3>Navigation</h3>
-      ${navHtml(active, true)}
-      <a href="mentions-legales.html">Mentions légales</a>
-    </nav>
-    <div class="footer-contact">
-      <h3>Nous contacter</h3>
-      <address>
-        <p>178 rue Ferrari<br>13005 Marseille</p>
-        <p><a href="tel:+33491428602">04 91 42 86 02</a></p>
-        <p class="footer-hours"><span class="footer-hours-k">Ouvert 7j/7</span><br>de 18h00 à 22h30</p>
-      </address>
-      <a href="https://g.page/r/CZF5BZ4UyT6UEBM/review" target="_blank" rel="noopener" class="btn btn--light btn--sm">Laisser un avis Google</a>
+    <div class="footer-col">
+      <h3 class="footer-col-h"><button type="button" class="footer-col-toggle" aria-expanded="true">Navigation</button></h3>
+      <div class="footer-col-body">
+        <nav class="footer-nav" aria-label="Pied de page">
+          ${navHtml(active, true)}
+          <a href="mentions-legales.html">Mentions légales</a>
+        </nav>
+      </div>
+    </div>
+    <div class="footer-col footer-contact">
+      <h3 class="footer-col-h"><button type="button" class="footer-col-toggle" aria-expanded="true">Nous contacter</button></h3>
+      <div class="footer-col-body">
+        <address>
+          <p>178 rue Ferrari<br>13005 Marseille</p>
+          <p><a href="tel:+33491428602">04 91 42 86 02</a></p>
+          <p class="footer-hours"><span class="footer-hours-k">Ouvert 7j/7</span><br>de 18h00 à 22h30</p>
+        </address>
+        <a href="https://g.page/r/CZF5BZ4UyT6UEBM/review" target="_blank" rel="noopener" class="btn btn--light btn--sm">Laisser un avis Google</a>
+      </div>
     </div>
   </div>
   <div class="footer-bottom">
