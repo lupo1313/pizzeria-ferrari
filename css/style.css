@@ -193,10 +193,10 @@ ul{margin:0;padding:0;list-style:none;}
 .pizza-card-media img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease);}
 .pizza-card:hover .pizza-card-media img{transform:scale(1.06);}
 .pizza-card-price{
-  position:absolute;top:12px;right:12px;background:var(--red);color:#fff;font-weight:800;
+  position:absolute;top:12px;right:12px;background:var(--red);color:#fff;font-weight:700;
   padding:7px 13px;border-radius:999px;font-size:1rem;box-shadow:0 6px 16px -6px rgba(0,0,0,.5);
 }
-.pizza-card-tag{position:absolute;top:12px;left:12px;background:var(--gold);color:#2a1e00;font-weight:800;
+.pizza-card-tag{position:absolute;top:12px;left:12px;background:var(--gold);color:#2a1e00;font-weight:700;
   font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;padding:5px 11px;border-radius:999px;}
 .pizza-card-body{padding:18px 20px 22px;display:flex;flex-direction:column;flex:1;}
 .pizza-card-body h3{font-size:1.4rem;margin-bottom:6px;color:var(--ink);}
@@ -233,7 +233,7 @@ ul{margin:0;padding:0;list-style:none;}
   letter-spacing:.05em;color:var(--red);background:rgba(198,40,40,.1);padding:2px 8px;border-radius:999px;margin-left:8px;vertical-align:middle;}
 .pizza-row-ing{display:block;color:var(--muted);font-size:.92rem;margin-top:3px;}
 .pizza-row-dots{flex:1;border-bottom:1px dotted rgba(17,17,17,.22);transform:translateY(-4px);min-width:16px;}
-.pizza-row-price{font-weight:800;color:var(--red);font-size:1.12rem;white-space:nowrap;font-family:var(--ff-body);}
+.pizza-row-price{font-weight:700;color:var(--red);font-size:1.12rem;white-space:nowrap;font-family:var(--ff-body);}
 
 /* Pizza burger spécial */
 .special-card{
@@ -247,7 +247,7 @@ ul{margin:0;padding:0;list-style:none;}
 .special-info .special-kicker{color:var(--gold-soft);font-weight:700;text-transform:uppercase;letter-spacing:.14em;font-size:.72rem;margin:0 0 4px;}
 .special-info h3{font-size:1.7rem;color:#fff;margin-bottom:4px;}
 .special-info p{color:var(--muted-dark);margin:0;font-size:.98rem;}
-.special-price{font-family:var(--ff-body);font-weight:800;font-size:2rem;color:var(--gold-soft);position:relative;}
+.special-price{font-family:var(--ff-body);font-weight:700;font-size:2rem;color:var(--gold-soft);position:relative;}
 
 /* Desserts / boissons / vins */
 .menu-secondary{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;max-width:1000px;margin:56px auto 0;}
@@ -259,7 +259,7 @@ ul{margin:0;padding:0;list-style:none;}
 .sec-name{font-weight:600;color:var(--ink);}
 .sec-detail{color:var(--muted);font-size:.85rem;}
 .sec-dots{flex:1;border-bottom:1px dotted rgba(17,17,17,.2);transform:translateY(-3px);min-width:12px;}
-.sec-price{font-weight:800;color:var(--red);white-space:nowrap;}
+.sec-price{font-weight:700;color:var(--red);white-space:nowrap;}
 .menu-note{text-align:center;color:var(--muted);margin-top:40px;font-size:.95rem;}
 .menu-note a{color:var(--gold-deep);font-weight:700;}
 
@@ -279,7 +279,7 @@ ul{margin:0;padding:0;list-style:none;}
 }
 .offre-card:hover{transform:translateY(-5px);border-color:var(--gold);}
 .offre-num{width:52px;height:52px;margin:0 auto 16px;border-radius:50%;display:grid;place-items:center;
-  background:linear-gradient(145deg,var(--gold-soft),var(--gold-deep));color:#2a1e00;font-weight:800;font-size:1.3rem;
+  background:linear-gradient(145deg,var(--gold-soft),var(--gold-deep));color:#2a1e00;font-weight:700;font-size:1.3rem;
   font-family:var(--ff-display);}
 .offre-card h3{font-size:1.3rem;color:var(--gold-soft);margin-bottom:10px;}
 .offre-card p{color:var(--muted-dark);margin:0;font-size:.98rem;}
@@ -354,7 +354,7 @@ ul{margin:0;padding:0;list-style:none;}
 .mcb-text{display:flex;flex-direction:column;line-height:1.15;flex:1;}
 .mcb-text strong{font-size:1rem;}
 .mcb-text span{font-size:.85rem;opacity:.9;}
-.mcb-pill{background:#fff;color:var(--red-deep);font-weight:800;padding:8px 16px;border-radius:999px;font-size:.9rem;}
+.mcb-pill{background:#fff;color:var(--red-deep);font-weight:700;padding:8px 16px;border-radius:999px;font-size:.9rem;}
 
 /* =========================================================
    MODALE MENTIONS LÉGALES
@@ -426,3 +426,141 @@ ul{margin:0;padding:0;list-style:none;}
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s var(--ease),transform .7s var(--ease);}
 .reveal.in{opacity:1;transform:none;}
 @media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;}}
+
+/* =========================================================
+   MULTI-PAGE — composants ajoutés
+   ========================================================= */
+
+/* ---- Icônes SVG homogènes ---- */
+.ico{display:inline-flex;align-items:center;justify-content:center;}
+.ico svg{width:1.05em;height:1.05em;}
+.btn .ico{margin-right:.15em;}
+.atout-ico:not(.flag-it) svg{width:2.4rem;height:2.4rem;color:var(--gold-soft);}
+.atout-ico:not(.flag-it){color:var(--gold-soft);}
+.ci-ico{color:var(--gold-soft);}
+.ci-ico svg{width:20px;height:20px;}
+.ico-lg svg{width:40px;height:40px;color:var(--gold);}
+.btn-order-header .btn-ico svg,.mcb-ico svg{width:18px;height:18px;}
+
+/* ---- Lien de nav actif ---- */
+.main-nav a.is-active{color:var(--gold-soft);}
+.main-nav a.is-active::after{width:100%;}
+.footer-nav a.is-active{color:var(--gold-soft);}
+
+/* ---- Titre hero : sous-ligne ---- */
+.hero-title-sub{display:block;font-family:var(--ff-body);font-weight:600;font-size:clamp(1rem,2.6vw,1.5rem);
+  letter-spacing:.02em;color:var(--gold-soft);-webkit-text-fill-color:var(--gold-soft);margin-top:.5rem;text-shadow:0 2px 12px rgba(0,0,0,.6);}
+
+/* ---- Page hero (pages intérieures) ---- */
+.page-hero{
+  background:linear-gradient(140deg,var(--black) 0%,var(--black-2) 60%,#201712 100%);
+  color:var(--cream);padding:calc(var(--header-h) + 54px) 0 54px;position:relative;overflow:hidden;
+  border-bottom:1px solid rgba(212,175,55,.2);
+}
+.page-hero::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--red),var(--gold),var(--red));}
+.page-hero::after{content:"";position:absolute;top:-120px;right:-80px;width:320px;height:320px;border-radius:50%;
+  background:radial-gradient(circle,rgba(212,175,55,.18),transparent 70%);pointer-events:none;}
+.page-hero-title{font-size:clamp(2.2rem,6vw,3.6rem);color:#fff;position:relative;
+  background:linear-gradient(180deg,#fff 40%,var(--gold-soft));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.page-hero-sub{color:var(--muted-dark);max-width:620px;margin:14px 0 24px;font-size:1.08rem;position:relative;}
+.page-hero .btn{position:relative;}
+
+/* ---- Fil d'Ariane ---- */
+.breadcrumb{font-size:.85rem;color:var(--muted-dark);margin-bottom:14px;letter-spacing:.02em;}
+.breadcrumb a{color:var(--gold-soft);font-weight:600;}
+.breadcrumb a:hover{text-decoration:underline;}
+.breadcrumb span[aria-hidden]{margin:0 6px;opacity:.6;}
+
+/* ---- Intro carte ---- */
+.menu-intro{max-width:760px;margin:0 auto 40px;text-align:center;color:var(--muted);font-size:1.05rem;line-height:1.7;}
+
+/* ---- Secondary : nom + détail empilés ---- */
+.sec-main{display:flex;flex-direction:column;min-width:0;}
+.sec-detail{color:var(--muted);font-size:.85rem;margin-top:2px;}
+
+/* ---- Ouvert / Fermé ---- */
+.openclosed{display:inline-flex;align-items:center;gap:10px;padding:9px 16px;border-radius:999px;margin-bottom:22px;
+  font-size:.92rem;border:1px solid transparent;}
+.openclosed strong{font-weight:700;}
+.openclosed .oc-note{color:var(--muted-dark);font-size:.85rem;}
+.openclosed .oc-dot{width:10px;height:10px;border-radius:50%;flex:none;}
+.openclosed.is-open{background:rgba(26,122,60,.14);border-color:rgba(26,122,60,.5);color:#8fe3a9;}
+.openclosed.is-open .oc-dot{background:#2ecc71;box-shadow:0 0 0 4px rgba(46,204,113,.18);animation:pulse 2s infinite;}
+.openclosed.is-closed{background:rgba(198,40,40,.14);border-color:rgba(198,40,40,.5);color:#f3a3a3;}
+.openclosed.is-closed .oc-dot{background:var(--red);}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 4px rgba(46,204,113,.18);}50%{box-shadow:0 0 0 8px rgba(46,204,113,0);}}
+@media (prefers-reduced-motion:reduce){.openclosed .oc-dot{animation:none;}}
+
+/* ---- Avis : note + grille ---- */
+.avis-rating{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;margin-bottom:34px;}
+.avis-rating-num{font-family:var(--ff-display);font-weight:900;font-size:2.6rem;color:var(--ink);line-height:1;}
+.avis-rating-count{color:var(--muted);font-size:.95rem;}
+.avis-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+.avis-card{background:#fff;border-radius:var(--radius);padding:26px 24px;box-shadow:var(--shadow-soft);border:1px solid rgba(212,175,55,.2);margin:0;}
+.avis-card blockquote{margin:10px 0 14px;color:#413c33;font-size:.98rem;line-height:1.6;}
+.avis-card figcaption{color:var(--muted);font-weight:600;font-size:.9rem;}
+
+/* ---- Contact : livraison ---- */
+.delivery-block{margin-top:30px;padding-top:24px;border-top:1px solid rgba(212,175,55,.2);}
+.delivery-block h2{font-size:1.3rem;color:var(--gold-soft);margin-bottom:8px;}
+.delivery-block p{color:var(--muted-dark);font-size:.96rem;}
+.delivery-links{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px;}
+.delivery-links .btn{padding:.6em 1.3em;}
+
+/* ---- Carte Google au clic ---- */
+.map-lazy{width:100%;height:100%;min-height:360px;display:grid;place-items:center;text-align:center;
+  background:
+    repeating-linear-gradient(45deg,rgba(212,175,55,.04) 0 14px,transparent 14px 28px),
+    linear-gradient(140deg,var(--black-2),var(--black-3));
+  color:var(--cream);padding:30px;}
+.map-lazy-inner p{margin:10px 0;color:var(--muted-dark);}
+.map-lazy-inner strong{color:var(--cream);}
+.map-privacy{font-size:.78rem;max-width:260px;margin:12px auto 0;opacity:.7;}
+
+/* ---- Bloc contact rapide (accueil) ---- */
+.contact-cta{background:linear-gradient(140deg,#201712,var(--black));color:var(--cream);}
+.contact-cta-inner{display:flex;align-items:center;justify-content:space-between;gap:30px;flex-wrap:wrap;}
+.contact-cta-text{color:var(--muted-dark);margin:12px 0 0;}
+.contact-cta-actions{display:flex;gap:14px;flex-wrap:wrap;}
+.btn-lg{font-size:1.15rem;padding:1em 1.8em;}
+
+/* ---- Offres : page dédiée ---- */
+.offres-grid-full{margin-bottom:10px;}
+.offres-note{max-width:720px;margin:48px auto 0;background:rgba(255,255,255,.04);border:1px solid rgba(212,175,55,.25);
+  border-radius:var(--radius);padding:30px 32px;position:relative;z-index:1;}
+.offres-note h2{color:var(--gold-soft);font-size:1.4rem;margin-bottom:18px;}
+.offres-steps{display:flex;flex-direction:column;gap:14px;}
+.offres-steps li{display:flex;align-items:flex-start;gap:14px;color:var(--cream);line-height:1.5;}
+.offres-steps a{color:var(--gold-soft);font-weight:700;}
+.os-num{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:.95rem;
+  background:linear-gradient(145deg,var(--gold-soft),var(--gold-deep));color:#2a1e00;font-family:var(--ff-body);}
+.offres-small{color:var(--muted-dark);font-size:.85rem;margin:18px 0 0;}
+
+/* ---- Footer social ---- */
+.footer-social{margin-top:16px;}
+.btn-sm{padding:.5em 1.1em;font-size:.85rem;}
+
+/* ---- Mentions légales ---- */
+.legal{background:var(--cream);}
+.legal-inner{max-width:760px;margin:0 auto;}
+.legal-inner h2{font-size:1.4rem;color:var(--ink);margin:26px 0 8px;}
+.legal-inner h2:first-child{margin-top:0;}
+.legal-inner p{color:#413c33;}
+
+/* ---- Responsive des ajouts ---- */
+@media (max-width:860px){
+  .avis-grid{grid-template-columns:1fr;}
+  .contact-cta-inner{flex-direction:column;align-items:flex-start;}
+}
+
+/* ---- Hero sur mobile : image plus visible, overlay allégé ---- */
+@media (max-width:699px){
+  .hero{min-height:94svh;}
+  .hero-overlay{
+    background:
+      linear-gradient(0deg,rgba(17,17,17,.96) 0%,rgba(17,17,17,.72) 34%,rgba(17,17,17,.18) 60%,rgba(17,17,17,.35) 100%);
+  }
+  .hero-content{padding-top:0;align-self:flex-end;padding-bottom:30px;}
+  .hero{align-items:flex-end;}
+}

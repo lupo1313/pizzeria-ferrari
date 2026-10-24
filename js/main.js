@@ -1,6 +1,7 @@
 /* =========================================================
-   PIZZERIA FERRARI — Scripts
-   Rendu de la carte depuis /data, interactions, accessibilité
+   PIZZERIA FERRARI — Scripts (multi-page)
+   Les fonctions de rendu sont tolérantes : chacune ne s'exécute
+   que si son conteneur existe sur la page courante.
    ========================================================= */
 (function () {
   "use strict";
@@ -8,7 +9,6 @@
   const $ = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => Array.from(c.querySelectorAll(s));
 
-  /* ---------- Utilitaires ---------- */
   function formatPrice(p) {
     if (Number.isInteger(p)) return p + " €";
     return p.toFixed(2).replace(".", ",") + " €";
@@ -17,28 +17,47 @@
     return String(str).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   }
 
-  /* ---------- Année footer ---------- */
+  /* ---------- Jeu d'icônes SVG ---------- */
+  const ICONS = {
+    phone: '<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.1-1.1a2 2 0 0 1 2.1-.5c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.7 2Z"/>',
+    flame: '<path d="M12 2s5 4.5 5 9.5a5 5 0 0 1-10 0c0-1.7.8-3 1.6-4C8.4 9 9 8 9 8s.5 2 2 2c0-3 1-6 1-8Z"/>',
+    pizza: '<path d="M12 2a19 19 0 0 1 10 5L12 22 2 7A19 19 0 0 1 12 2Z"/><circle cx="12" cy="8.5" r="1.1" fill="#111" stroke="none"/><circle cx="9" cy="12" r="1.1" fill="#111" stroke="none"/><circle cx="14.5" cy="12.5" r="1.1" fill="#111" stroke="none"/>',
+    clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+    pin: '<path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/>',
+    route: '<circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="6" r="2.5"/><path d="M8.5 18H14a3.5 3.5 0 0 0 0-7H9a3.5 3.5 0 0 1 0-7h3.5"/>',
+    leaf: '<path d="M11 20A7 7 0 0 1 4 13c0-5 4-9 16-9 0 10-4 14-9 14-2 0-4-1-5-3"/><path d="M11 20c0-5 2-9 7-11"/>',
+    scooter: '<circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.5 18h7M18 16V9h-3M4 9h6l3 7"/>'
+  };
+  function injectIcons(root = document) {
+    $$("[data-ico]", root).forEach(el => {
+      const key = el.getAttribute("data-ico");
+      if (!ICONS[key] || el.dataset.done) return;
+      el.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[key]}</svg>`;
+      el.dataset.done = "1";
+    });
+  }
+
+  /* ---------- Année ---------- */
   const yearEl = $("#year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
   /* ---------- Header au défilement ---------- */
   const header = $(".site-header");
-  const onScroll = () => {
-    if (window.scrollY > 40) header.classList.add("scrolled");
-    else header.classList.remove("scrolled");
-  };
-  onScroll();
-  window.addEventListener("scroll", onScroll, { passive: true });
+  if (header) {
+    const onScroll = () => header.classList.toggle("scrolled", window.scrollY > 40);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+  }
 
-  /* ---------- Menu mobile (burger) ---------- */
+  /* ---------- Menu mobile ---------- */
   const burger = $("#burger");
   const nav = $("#main-nav");
-  function closeNav() {
-    nav.classList.remove("open");
-    burger.setAttribute("aria-expanded", "false");
-    burger.setAttribute("aria-label", "Ouvrir le menu");
-  }
   if (burger && nav) {
+    const closeNav = () => {
+      nav.classList.remove("open");
+      burger.setAttribute("aria-expanded", "false");
+      burger.setAttribute("aria-label", "Ouvrir le menu");
+    };
     burger.addEventListener("click", () => {
       const open = nav.classList.toggle("open");
       burger.setAttribute("aria-expanded", String(open));
@@ -48,61 +67,88 @@
     document.addEventListener("keydown", e => { if (e.key === "Escape") closeNav(); });
   }
 
-  /* ---------- Reveal au défilement ---------- */
+  /* ---------- Reveal ---------- */
   function initReveal() {
     const els = $$(".reveal");
-    if (!("IntersectionObserver" in window) || !els.length) {
-      els.forEach(el => el.classList.add("in"));
+    if (!els.length) return;
+    const show = el => el.classList.add("in");
+    // Balayage : révèle tout élément entré dans la fenêtre. Garantit qu'aucun
+    // contenu ne reste masqué, même si l'IntersectionObserver ne se déclenche pas.
+    const sweep = () => {
+      let remaining = false;
+      els.forEach(el => {
+        if (el.classList.contains("in")) return;
+        const r = el.getBoundingClientRect();
+        if (r.top < (window.innerHeight || document.documentElement.clientHeight) * 0.96 && r.bottom > 0) show(el);
+        else remaining = true;
+      });
+      return remaining;
+    };
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(ent => { if (ent.isIntersecting) { show(ent.target); io.unobserve(ent.target); } });
+      }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
+      els.forEach(el => io.observe(el));
+    } else {
+      els.forEach(show);
       return;
     }
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(ent => {
-        if (ent.isIntersecting) { ent.target.classList.add("in"); io.unobserve(ent.target); }
-      });
-    }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
-    els.forEach(el => io.observe(el));
+    window.addEventListener("scroll", sweep, { passive: true });
+    window.addEventListener("resize", sweep, { passive: true });
+    document.addEventListener("visibilitychange", () => { if (!document.hidden) sweep(); });
+    requestAnimationFrame(sweep);
+    setTimeout(sweep, 700);
   }
 
-  /* ---------- Rendu des données ---------- */
+  /* ---------- Ouvert / Fermé ---------- */
+  function renderOpenClosed() {
+    const el = $("#openclosed");
+    if (!el) return;
+    // Ouvert tous les jours 18h00 - 22h30 (heure locale du visiteur)
+    const now = new Date();
+    const mins = now.getHours() * 60 + now.getMinutes();
+    const open = mins >= 18 * 60 && mins <= 22 * 60 + 30;
+    el.hidden = false;
+    el.classList.add(open ? "is-open" : "is-closed");
+    el.innerHTML = open
+      ? '<span class="oc-dot"></span><strong>Ouvert maintenant</strong><span class="oc-note">jusqu\'à 22h30</span>'
+      : '<span class="oc-dot"></span><strong>Fermé</strong><span class="oc-note">ouverture tous les jours à 18h00</span>';
+  }
+
+  /* ---------- Rendus carte ---------- */
   function renderFeatured(menu) {
     const grid = $("#featured-grid");
     if (!grid) return;
     const all = {};
     menu.categories.forEach(cat => cat.pizzas.forEach(p => { all[p.id] = p; }));
-    const html = menu.featured.map(id => {
-      const p = all[id];
-      if (!p) return "";
+    grid.innerHTML = menu.featured.map(id => {
+      const p = all[id]; if (!p) return "";
       const img = p.img || "assets/img/p-" + id + ".webp";
       const tag = p.signature ? '<span class="pizza-card-tag">Signature</span>' : "";
       return `
         <article class="pizza-card reveal">
-          <div class="pizza-card-media">
-            ${tag}
+          <div class="pizza-card-media">${tag}
             <img src="${esc(img)}" alt="Pizza ${esc(p.name)} — ${esc(p.ingredients)}" loading="lazy" width="640" height="480">
             <span class="pizza-card-price">${formatPrice(p.price)}</span>
           </div>
           <div class="pizza-card-body">
             <h3>${esc(p.name)}</h3>
             <p class="pizza-card-ing">${esc(p.ingredients)}</p>
-            <div class="pizza-card-cta"><a href="tel:+33491428602" class="btn btn-red">📞 Commander</a></div>
+            <div class="pizza-card-cta"><a href="tel:+33491428602" class="btn btn-red"><span class="ico" data-ico="phone"></span> Commander</a></div>
           </div>
         </article>`;
     }).join("");
-    grid.innerHTML = html;
+    injectIcons(grid);
   }
 
   function renderMenu(menu) {
-    const tabsWrap = $("#menu-tabs");
-    const panelsWrap = $("#menu-panels");
+    const tabsWrap = $("#menu-tabs"), panelsWrap = $("#menu-panels");
     if (!tabsWrap || !panelsWrap) return;
-
     tabsWrap.innerHTML = menu.categories.map((cat, i) => `
       <button class="menu-tab" role="tab" id="tab-${cat.id}" aria-controls="panel-${cat.id}"
               aria-selected="${i === 0 ? "true" : "false"}" data-cat="${cat.id}">
-        <span aria-hidden="true">${cat.icon}</span> ${esc(cat.label)}
-        <span class="tab-count">${esc(cat.count_note)}</span>
+        ${esc(cat.label)} <span class="tab-count">${esc(cat.count_note)}</span>
       </button>`).join("");
-
     panelsWrap.innerHTML = menu.categories.map((cat, i) => {
       const rows = cat.pizzas.map(p => {
         const note = p.note ? `<span class="pizza-row-note">${esc(p.note)}</span>` : "";
@@ -116,26 +162,17 @@
             <span class="pizza-row-price">${formatPrice(p.price)}</span>
           </div>`;
       }).join("");
-      return `
-        <div class="menu-panel ${i === 0 ? "active" : ""}" id="panel-${cat.id}" role="tabpanel"
-             aria-labelledby="tab-${cat.id}" ${i === 0 ? "" : "hidden"}>
-          <div class="pizza-list">${rows}</div>
-        </div>`;
+      return `<div class="menu-panel ${i === 0 ? "active" : ""}" id="panel-${cat.id}" role="tabpanel" aria-labelledby="tab-${cat.id}" ${i === 0 ? "" : "hidden"}><div class="pizza-list">${rows}</div></div>`;
     }).join("");
-
     const tabs = $$(".menu-tab", tabsWrap);
-    tabs.forEach(tab => {
-      tab.addEventListener("click", () => selectTab(tab.dataset.cat));
-    });
-
-    function selectTab(catId) {
-      tabs.forEach(t => t.setAttribute("aria-selected", String(t.dataset.cat === catId)));
+    tabs.forEach(tab => tab.addEventListener("click", () => {
+      tabs.forEach(t => t.setAttribute("aria-selected", String(t.dataset.cat === tab.dataset.cat)));
       $$(".menu-panel", panelsWrap).forEach(pn => {
-        const match = pn.id === "panel-" + catId;
+        const match = pn.id === "panel-" + tab.dataset.cat;
         pn.classList.toggle("active", match);
         if (match) pn.removeAttribute("hidden"); else pn.setAttribute("hidden", "");
       });
-    }
+    }));
   }
 
   function renderSpecial(menu) {
@@ -150,28 +187,26 @@
         <p>${esc(s.ingredients)}</p>
       </div>
       <span class="special-price">${formatPrice(s.price)}</span>
-      <a href="tel:+33491428602" class="btn btn-gold">📞 Commander</a>`;
+      <a href="tel:+33491428602" class="btn btn-gold"><span class="ico" data-ico="phone"></span> Commander</a>`;
+    injectIcons(el);
   }
 
   function renderSecondary(menu) {
-    const secRow = (name, detail, price) => `
+    const block = (name, below, price) => `
       <div class="sec-row">
-        <span class="sec-name">${esc(name)}${detail ? ` <span class="sec-detail">${esc(detail)}</span>` : ""}</span>
+        <span class="sec-main"><span class="sec-name">${esc(name)}</span>${below ? `<span class="sec-detail">${esc(below)}</span>` : ""}</span>
         <span class="sec-dots" aria-hidden="true"></span>
         <span class="sec-price">${formatPrice(price)}</span>
       </div>`;
-
     const desserts = $("#desserts-col");
-    if (desserts) desserts.innerHTML = `<h3><span aria-hidden="true">🍫</span> Desserts</h3><p class="col-sub">Gourmandises</p>` +
-      menu.desserts.map(d => secRow(d.name, d.ingredients, d.price)).join("");
-
+    if (desserts) desserts.innerHTML = `<h3>Desserts</h3><p class="col-sub">Gourmandises</p>` +
+      menu.desserts.map(d => block(d.name, d.ingredients, d.price)).join("");
     const drinks = $("#drinks-col");
-    if (drinks) drinks.innerHTML = `<h3><span aria-hidden="true">🥤</span> Boissons</h3><p class="col-sub">Fraîcheur</p>` +
-      menu.drinks.map(d => secRow(d.name, d.detail, d.price)).join("");
-
+    if (drinks) drinks.innerHTML = `<h3>Boissons</h3><p class="col-sub">Fraîcheur</p>` +
+      menu.drinks.map(d => block(d.name, d.detail, d.price)).join("");
     const wines = $("#wines-col");
-    if (wines) wines.innerHTML = `<h3><span aria-hidden="true">🍷</span> Vins</h3><p class="col-sub">75 cl</p>` +
-      menu.wines.map(w => secRow(w.name, "", w.price)).join("");
+    if (wines) wines.innerHTML = `<h3>Vins</h3><p class="col-sub">75 cl</p>` +
+      menu.wines.map(w => block(w.name, "", w.price)).join("");
   }
 
   function renderOffers(menu) {
@@ -185,38 +220,68 @@
       </div>`).join("");
   }
 
-  /* ---------- Mentions légales (modale) ---------- */
-  function initLegal(config) {
-    const link = $("#mentions-link");
-    if (!link) return;
-    const modal = document.createElement("div");
-    modal.className = "modal";
-    modal.setAttribute("role", "dialog");
-    modal.setAttribute("aria-modal", "true");
-    modal.setAttribute("aria-label", "Mentions légales");
-    modal.innerHTML = `
-      <div class="modal-backdrop" data-close></div>
-      <div class="modal-box">
-        <button class="modal-close" data-close aria-label="Fermer">×</button>
-        <h2>Mentions légales</h2>
-        <h3>Éditeur</h3>
-        <p>Pizzeria Ferrari<br>178 rue Ferrari, 13005 Marseille<br>Téléphone : 04 91 42 86 02</p>
-        <h3>Hébergement</h3>
-        <p>Ce site est hébergé par son prestataire d'hébergement web.</p>
-        <h3>Données personnelles</h3>
-        <p>Ce site vitrine ne collecte aucune donnée personnelle via un formulaire. Les appels passés via le bouton « Commander » sont établis directement avec la pizzeria.</p>
-        <h3>Propriété intellectuelle</h3>
-        <p>L'ensemble des éléments du site (textes, logos, visuels) est la propriété de la Pizzeria Ferrari ou utilisé avec autorisation. Toute reproduction est interdite sans accord préalable.</p>
-      </div>`;
-    document.body.appendChild(modal);
-    const open = () => { modal.classList.add("open"); document.body.style.overflow = "hidden"; };
-    const close = () => { modal.classList.remove("open"); document.body.style.overflow = ""; };
-    link.addEventListener("click", e => { e.preventDefault(); open(); });
-    modal.addEventListener("click", e => { if (e.target.hasAttribute("data-close")) close(); });
-    document.addEventListener("keydown", e => { if (e.key === "Escape") close(); });
+  /* ---------- Avis ---------- */
+  function renderAvis(config) {
+    const el = $("#avis-content");
+    if (!el) return;
+    const reviews = (config && config.reviews) || [];
+    const rating = (config && config.rating) || {};
+    let head = "";
+    if (rating.value) {
+      head = `<div class="avis-rating"><span class="avis-rating-num">${esc(rating.value)}</span>
+        <span class="avis-stars" aria-hidden="true">★★★★★</span>
+        ${rating.count ? `<span class="avis-rating-count">${esc(rating.count)} avis Google</span>` : ""}</div>`;
+    }
+    if (reviews.length) {
+      const cards = reviews.map(r => `
+        <figure class="avis-card reveal">
+          <div class="avis-stars" aria-hidden="true">★★★★★</div>
+          <blockquote>${esc(r.text)}</blockquote>
+          <figcaption>— ${esc(r.author)}</figcaption>
+        </figure>`).join("");
+      el.innerHTML = head + `<div class="avis-grid">${cards}</div>
+        <div class="section-cta"><a href="https://g.page/r/CZF5BZ4UyT6UEBM/review" class="btn btn-gold" target="_blank" rel="noopener">Laisser un avis</a></div>`;
+    } else {
+      el.innerHTML = `
+        <div class="avis-box">
+          <div class="avis-stars" aria-hidden="true">★★★★★</div>
+          <p class="avis-lead">Vous êtes déjà venu chez Ferrari ?</p>
+          <p class="avis-text">Votre avis nous fait grandir et aide d'autres Marseillais à nous découvrir. Vos retours seront bientôt affichés ici.</p>
+          <div class="avis-actions">
+            <a href="https://g.page/r/CZF5BZ4UyT6UEBM/review" class="btn btn-gold" target="_blank" rel="noopener">Laisser un avis Google</a>
+            <a href="https://share.google/ZJxFsEv9wNh0HJPlC" class="btn btn-dark" target="_blank" rel="noopener">Voir la fiche Google</a>
+          </div>
+        </div>`;
+    }
+    injectIcons(el);
   }
 
-  /* ---------- Chargement ---------- */
+  /* ---------- Livraison ---------- */
+  function renderDelivery(config) {
+    const el = $("#delivery-links");
+    if (!el || !config || !config.delivery) return;
+    const d = config.delivery;
+    let html = "";
+    if (d.uber_eats_url) html += `<a href="${esc(d.uber_eats_url)}" class="btn btn-dark" target="_blank" rel="noopener">Uber Eats</a>`;
+    if (d.deliveroo_url) html += `<a href="${esc(d.deliveroo_url)}" class="btn btn-dark" target="_blank" rel="noopener">Deliveroo</a>`;
+    el.innerHTML = html;
+  }
+
+  /* ---------- Carte Google au clic (RGPD) ---------- */
+  function initMapLazy() {
+    const btn = $("#map-load-btn"), box = $("#map-lazy");
+    if (!btn || !box) return;
+    btn.addEventListener("click", () => {
+      const src = box.dataset.src;
+      box.outerHTML = `<iframe title="Localisation de la Pizzeria Ferrari" src="${src}" width="100%" height="100%" style="border:0;min-height:360px;" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`;
+    });
+  }
+
+  /* ---------- Init icônes statiques (header/footer) ---------- */
+  injectIcons(document);
+  renderOpenClosed();
+
+  /* ---------- Chargement des données ---------- */
   Promise.all([
     fetch("data/menu.json").then(r => r.json()),
     fetch("data/config.json").then(r => r.json()).catch(() => ({}))
@@ -226,12 +291,15 @@
     renderSpecial(menu);
     renderSecondary(menu);
     renderOffers(menu);
-    initLegal(config);
-    // marque quelques blocs statiques comme révélables
-    $$(".atout, .offre-card, .histoire-media, .avis-box").forEach(el => el.classList.add("reveal"));
+    renderAvis(config);
+    renderDelivery(config);
+    initMapLazy();
+    $$(".atout, .offre-card, .histoire-media, .avis-box, .page-hero").forEach(el => el.classList.add("reveal"));
     initReveal();
   }).catch(err => {
     console.error("Erreur de chargement des données :", err);
+    initMapLazy();
+    initReveal();
   });
 
 })();

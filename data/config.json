@@ -31,5 +31,7 @@
     "uber_eats_url": "https://www.ubereats.com/fr/search?q=Pizzeria%20Ferrari%20Marseille",
     "deliveroo_url": "https://deliveroo.fr/fr/search?q=Pizzeria%20Ferrari%20Marseille"
   },
+  "rating": { "value": "", "count": "" },
+  "reviews": [],
   "_notes": "A VERIFIER / COMPLETER PAR FABIEN : (1) liens Uber Eats / Deliveroo = liens de recherche provisoires, a remplacer par les URL exactes de la fiche Ferrari sur chaque plateforme. (2) google_profile_url a confirmer. (3) le lecteur de carte utilise l'adresse exacte, verifier que le pin Google tombe bien sur le resto."
 }

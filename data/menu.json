@@ -14,7 +14,7 @@
       "detail": "La livraison est offerte sur vos commandes."
     }
   ],
-  "featured": ["anchois", "chorizo", "royale", "ferrari", "quatre-fromages", "mexicaine"],
+  "featured": ["anchois", "chorizo", "royale", "ferrari", "4-fromages-tomate", "mexicaine"],
   "categories": [
     {
       "id": "tomate",
