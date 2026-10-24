@@ -22,25 +22,25 @@ const PAGES = [
   {
     slug: "index.html", nav: "accueil", hero: true,
     title: "Pizzeria Ferrari | Pizza au feu de bois à Marseille 13005 depuis 1980",
-    description: "Pizzeria Ferrari, institution marseillaise depuis 1980. 35 pizzas généreuses cuites au feu de bois, sur place, à emporter ou en livraison. 178 rue Ferrari, 13005 Marseille. Commandez au 04 91 42 86 02.",
+    description: "Depuis 1980, la Pizzeria Ferrari régale Marseille : 35 pizzas généreuses cuites au feu de bois, à déguster sur place, à emporter ou livrées gratuitement. 178 rue Ferrari, 13005. Commandez au 04 91 42 86 02.",
     breadcrumb: null
   },
   {
     slug: "carte.html", nav: "carte", hero: false,
     title: "La carte | 35 pizzas au feu de bois - Pizzeria Ferrari Marseille",
-    description: "Découvrez la carte de la Pizzeria Ferrari à Marseille : 22 pizzas base tomate, 13 pizzas à la crème fraîche, cuites au feu de bois, desserts, boissons et vins. Prix à partir de 10 €.",
+    description: "La carte de la Pizzeria Ferrari : 35 pizzas au feu de bois (22 tomate, 13 crème fraîche), plus desserts, boissons et vins. Pâte à l'ancienne, prix dès 10 €. Commandez au 04 91 42 86 02.",
     breadcrumb: "La carte"
   },
   {
     slug: "offres.html", nav: "offres", hero: false,
-    title: "Nos offres & fidélité | Pizzeria Ferrari Marseille 5e",
-    description: "Les offres de la Pizzeria Ferrari à Marseille : carte de fidélité, pizza ou boisson offerte, livraison offerte. Profitez-en au 04 91 42 86 02.",
+    title: "Offres & fidélité | Pizzeria Ferrari Marseille – Livraison gratuite",
+    description: "Livraison gratuite sans minimum, 3 pizzas achetées = la 4ᵉ offerte, carte de fidélité : profitez des offres de la Pizzeria Ferrari à Marseille. Commandez au 04 91 42 86 02.",
     breadcrumb: "Nos offres"
   },
   {
     slug: "histoire.html", nav: "histoire", hero: false,
     title: "Notre histoire | Pizzeria au feu de bois depuis 1980 - Marseille",
-    description: "Depuis 1980, la Pizzeria Ferrari fait vivre la tradition du feu de bois au 178 rue Ferrari, dans le 5e arrondissement de Marseille. Découvrez son histoire et son savoir-faire.",
+    description: "La Pizzeria Ferrari, c'est le feu de bois depuis 1980, au 178 rue Ferrari dans le 5e arrondissement de Marseille. Une adresse de quartier fidèle à son savoir-faire.",
     breadcrumb: "Notre histoire"
   },
   {

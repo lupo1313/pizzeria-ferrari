@@ -139,7 +139,7 @@
         const img = p.img || "assets/img/p-" + id + ".webp";
         const tag = p.signature ? '<span class="rail-tag">La signature</span>' : "";
         return `<article class="rail-card">
-          <div class="rail-card-media"><img src="${esc(img)}" alt="Pizza ${esc(p.name)}" loading="lazy" width="440" height="550"></div>
+          <div class="rail-card-media"><img src="${esc(img)}" alt="Pizza ${esc(p.name)} au feu de bois" loading="lazy" width="440" height="550"></div>
           ${tag}
           <div class="rail-meta"><span class="rail-name">${esc(p.name)}</span><span class="rail-price">${price(p.price)}</span></div>
         </article>`;
@@ -189,8 +189,8 @@
     el.innerHTML = `
       <div class="promo-lead reveal">
         <p class="promo-kicker">Avantages maison</p>
-        <p class="promo-big">${esc(lead.detail)}</p>
-        <p class="promo-sub">${esc(lead.title)}.</p>
+        <p class="promo-big">${esc(lead.title)}</p>
+        <p class="promo-sub">${esc(lead.detail)}</p>
         <a href="tel:+33491428602" class="btn btn--primary"><span class="ico" data-ico="phone"></span> J'en profite</a>
       </div>
       <ul class="promo-list reveal">
@@ -226,7 +226,7 @@
         </figure>`).join("") + `</div>`;
     } else {
       body = `<div class="reviews-empty">
-        <p>Une sélection de nos avis Google sera affichée ici prochainement. En attendant, consultez-les directement sur notre fiche.</p>
+        <p>Nos clients nous notent sur Google. Une sélection sera bientôt mise en avant ici — en attendant, allez y jeter un œil.</p>
         <a href="${esc(review)}" class="btn btn--primary" target="_blank" rel="noopener">Laisser un avis</a>
       </div>`;
     }

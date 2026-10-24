@@ -2,16 +2,16 @@
   "currency": "€",
   "offers": [
     {
+      "title": "La 4ᵉ pizza offerte",
+      "detail": "3 pizzas achetées, la 4ᵉ au choix vous est offerte — ou une boisson, c'est vous qui voyez."
+    },
+    {
+      "title": "Livraison gratuite",
+      "detail": "Offerte et sans minimum de commande, dans les 1er, 2e, 4e, 5e, 6e, 7e et 10e arrondissements de Marseille."
+    },
+    {
       "title": "Carte de fidélité",
-      "detail": "10 points = 1 pizza offerte (anchois ou fromage)."
-    },
-    {
-      "title": "3 pizzas achetées",
-      "detail": "1 boisson offerte, ou la 4ème pizza au choix offerte."
-    },
-    {
-      "title": "Livraison offerte",
-      "detail": "La livraison est offerte sur vos commandes."
+      "detail": "10 points cumulés = 1 pizza offerte (anchois ou fromage). On compte pour vous."
     }
   ],
   "featured": ["anchois", "chorizo", "royale", "ferrari", "4-fromages-tomate", "mexicaine"],
