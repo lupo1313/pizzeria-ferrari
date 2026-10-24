@@ -186,10 +186,9 @@ function footer(active) {
     </div>
   </div>
 </footer>
-<a href="tel:+33491428602" class="mobile-call-bar" aria-label="Appeler la Pizzeria Ferrari pour commander">
-  <span class="mcb-ico" aria-hidden="true">${ICON.phone}</span>
-  <span class="mcb-text"><strong>Commander</strong><span>04 91 42 86 02</span></span>
-  <span class="mcb-pill" aria-hidden="true">Appeler</span>
+<a href="tel:+33491428602" class="mobile-cta" id="mobile-cta" aria-label="Appeler la Pizzeria Ferrari pour commander">
+  <span class="mobile-cta-ico" aria-hidden="true">${ICON.phone}</span>
+  <span class="mobile-cta-label">Commander</span>
 </a>
 <script src="js/main.js" defer></script>
 </body>

@@ -55,17 +55,33 @@
   if (burger && nav) {
     const closeNav = () => {
       nav.classList.remove("open");
+      document.body.classList.remove("nav-open");
       burger.setAttribute("aria-expanded", "false");
       burger.setAttribute("aria-label", "Ouvrir le menu");
     };
     burger.addEventListener("click", () => {
       const open = nav.classList.toggle("open");
+      document.body.classList.toggle("nav-open", open);
       burger.setAttribute("aria-expanded", String(open));
       burger.setAttribute("aria-label", open ? "Fermer le menu" : "Ouvrir le menu");
     });
     $$("a", nav).forEach(a => a.addEventListener("click", closeNav));
     document.addEventListener("keydown", e => { if (e.key === "Escape") closeNav(); });
   }
+
+  /* ---------- FAB mobile : masqué dès qu'une zone d'appel est visible (anti-doublon) ---------- */
+  (function () {
+    const fab = $("#mobile-cta");
+    if (!fab || !("IntersectionObserver" in window)) return;
+    const zones = $$(".site-footer, .contact, .contact-cta, .page-hero, .hero");
+    if (!zones.length) return;
+    const visible = new Set();
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) visible.add(e.target); else visible.delete(e.target); });
+      fab.classList.toggle("is-hidden", visible.size > 0);
+    }, { rootMargin: "0px 0px -8% 0px" });
+    zones.forEach(z => io.observe(z));
+  })();
 
   /* ---------- Reveal ---------- */
   function initReveal() {
@@ -117,15 +133,19 @@
 
   /* ---------- Rendus carte ---------- */
   function renderFeatured(menu) {
-    const grid = $("#featured-grid");
-    if (!grid) return;
+    const grids = $$(".js-featured");
+    if (!grids.length) return;
     const all = {};
     menu.categories.forEach(cat => cat.pizzas.forEach(p => { all[p.id] = p; }));
-    grid.innerHTML = menu.featured.map(id => {
-      const p = all[id]; if (!p) return "";
-      const img = p.img || "assets/img/p-" + id + ".webp";
-      const tag = p.signature ? '<span class="pizza-card-tag">Signature</span>' : "";
-      return `
+    grids.forEach(grid => {
+      const limit = parseInt(grid.dataset.featured || "0", 10);
+      let ids = menu.featured.slice();
+      if (limit > 0) ids = ids.slice(0, limit);
+      grid.innerHTML = ids.map(id => {
+        const p = all[id]; if (!p) return "";
+        const img = p.img || "assets/img/p-" + id + ".webp";
+        const tag = p.signature ? '<span class="pizza-card-tag">Signature</span>' : "";
+        return `
         <article class="pizza-card reveal">
           <div class="pizza-card-media">${tag}
             <img src="${esc(img)}" alt="Pizza ${esc(p.name)} — ${esc(p.ingredients)}" loading="lazy" width="640" height="480">
@@ -134,11 +154,12 @@
           <div class="pizza-card-body">
             <h3>${esc(p.name)}</h3>
             <p class="pizza-card-ing">${esc(p.ingredients)}</p>
-            <div class="pizza-card-cta"><a href="tel:+33491428602" class="btn btn-red"><span class="ico" data-ico="phone"></span> Commander</a></div>
+            <div class="pizza-card-cta"><a href="tel:+33491428602" class="btn btn-red btn-sm"><span class="ico" data-ico="phone"></span> Commander</a></div>
           </div>
         </article>`;
-    }).join("");
-    injectIcons(grid);
+      }).join("");
+      injectIcons(grid);
+    });
   }
 
   function renderMenu(menu) {

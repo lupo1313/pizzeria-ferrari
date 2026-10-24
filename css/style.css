@@ -90,7 +90,7 @@ ul{margin:0;padding:0;list-style:none;}
   font-size:.75rem;color:var(--gold-deep);margin:0 0 12px;
 }
 .eyebrow.light{color:var(--gold-soft);}
-.section-title{font-size:clamp(2rem,5vw,3.1rem);color:var(--ink);}
+.section-title{font-size:clamp(1.75rem,5.2vw,3.1rem);color:var(--ink);}
 .section-title.light{color:var(--cream);}
 .section-intro{margin-top:16px;color:var(--muted);font-size:1.05rem;}
 .light + .divider ~ .section-intro,.section-title.light ~ .section-intro{color:var(--muted-dark);}
@@ -341,20 +341,25 @@ ul{margin:0;padding:0;list-style:none;}
 .footer-legal a:hover{color:var(--gold-soft);text-decoration:underline;}
 
 /* =========================================================
-   BARRE D'APPEL MOBILE
+   CTA FLOTTANT MOBILE (compact, bottom-right, safe-area)
    ========================================================= */
-.mobile-call-bar{
-  position:fixed;left:12px;right:12px;bottom:12px;z-index:90;
-  display:none;align-items:center;gap:12px;
-  background:linear-gradient(135deg,var(--red),var(--red-deep));color:#fff;
-  padding:12px 16px;border-radius:14px;box-shadow:0 14px 34px -10px rgba(0,0,0,.6);
-  border:1px solid rgba(255,255,255,.14);
+.mobile-cta{
+  position:fixed;right:14px;z-index:95;
+  bottom:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));
+  display:none;align-items:center;gap:.5em;
+  background:linear-gradient(140deg,var(--red),var(--red-deep));color:#fff;
+  padding:12px 20px;border-radius:999px;
+  font-family:var(--ff-body);font-weight:700;font-size:1rem;line-height:1;letter-spacing:.01em;
+  box-shadow:0 12px 26px -8px rgba(198,40,40,.75),0 2px 6px rgba(0,0,0,.35);
+  border:1.5px solid rgba(231,200,107,.55);
+  transition:transform .3s var(--ease),opacity .3s var(--ease),box-shadow .25s;
 }
-.mcb-ico{font-size:1.4rem;}
-.mcb-text{display:flex;flex-direction:column;line-height:1.15;flex:1;}
-.mcb-text strong{font-size:1rem;}
-.mcb-text span{font-size:.85rem;opacity:.9;}
-.mcb-pill{background:#fff;color:var(--red-deep);font-weight:700;padding:8px 16px;border-radius:999px;font-size:.9rem;}
+.mobile-cta:active{transform:scale(.96);}
+.mobile-cta-ico{display:inline-flex;}
+.mobile-cta-ico svg{width:18px;height:18px;}
+.mobile-cta.is-hidden{opacity:0;transform:translateY(130%);pointer-events:none;}
+body.nav-open{overflow:hidden;}
+body.nav-open .mobile-cta{opacity:0;pointer-events:none;}
 
 /* =========================================================
    MODALE MENTIONS LÉGALES
@@ -377,9 +382,11 @@ ul{margin:0;padding:0;list-style:none;}
   .footer-brand{grid-column:1 / -1;}
 }
 @media (max-width:860px){
+  :root{--header-h:60px;}
+  .brand-logo{height:38px;}
   .main-nav{
     position:fixed;top:var(--header-h);left:0;right:0;flex-direction:column;gap:0;
-    background:rgba(17,17,17,.99);padding:8px 22px 22px;
+    background:rgba(17,17,17,.99);padding:8px 22px calc(22px + env(safe-area-inset-bottom,0px));
     transform:translateY(-130%);transition:transform .35s var(--ease);box-shadow:0 20px 40px -18px rgba(0,0,0,.8);
     border-bottom:1px solid rgba(212,175,55,.2);max-height:calc(100svh - var(--header-h));overflow:auto;
   }
@@ -392,6 +399,7 @@ ul{margin:0;padding:0;list-style:none;}
   .atouts-grid{grid-template-columns:1fr;gap:10px;}
   .atout{display:flex;align-items:center;gap:16px;text-align:left;padding:12px 4px;}
   .atout-ico{margin:0;font-size:2rem;}
+  .atout-ico:not(.flag-it) svg{width:2rem;height:2rem;}
   .featured-grid{grid-template-columns:1fr 1fr;gap:16px;}
   .offres-grid{grid-template-columns:1fr;}
   .menu-secondary{grid-template-columns:1fr;gap:16px;}
@@ -399,21 +407,33 @@ ul{margin:0;padding:0;list-style:none;}
   .histoire-inner{grid-template-columns:1fr;gap:28px;}
   .contact-inner{grid-template-columns:1fr;gap:26px;}
   .contact-map{min-height:300px;}
-  .mobile-call-bar{display:flex;}
+  .mobile-cta{display:inline-flex;}
   main{margin-bottom:0;}
-  body{padding-bottom:84px;}
+  body{padding-bottom:calc(22px + env(safe-area-inset-bottom,0px));}
+  .page-hero{padding:calc(var(--header-h) + 34px) 0 36px;}
 }
 @media (max-width:560px){
   body{font-size:16px;}
-  .section{padding:62px 0;}
+  .section{padding:52px 0;}
   .container{padding:0 18px;}
-  .featured-grid{grid-template-columns:1fr;}
+  .section-head{margin-bottom:34px;}
+  .featured-grid{grid-template-columns:1fr;gap:18px;}
   .hero-actions{flex-direction:column;align-items:stretch;}
   .hero-actions .btn{width:100%;}
   .special-card{flex-direction:column;text-align:center;align-items:center;}
-  .avis-actions .btn,.contact-actions .btn{width:100%;}
+  .avis-actions .btn,.contact-actions .btn,.histoire-cta .btn,.delivery-links .btn{width:100%;}
+  .contact-actions,.histoire-cta,.delivery-links{width:100%;}
   .footer-grid{grid-template-columns:1fr;}
   .footer-bottom .container{flex-direction:column;text-align:center;}
+  /* Carte : onglets pleine largeur, lisibilité des prix */
+  .menu-tabs{gap:10px;}
+  .menu-tab{flex:1 1 100%;justify-content:center;font-size:.98rem;padding:.75em 1em;}
+  .pizza-row{padding:13px 2px;gap:8px;}
+  .pizza-row-name{font-size:1.12rem;}
+  .pizza-row-ing{font-size:.9rem;}
+  .page-hero-sub{font-size:1rem;}
+  .contact-cta-actions .btn{width:100%;}
+  .contact-cta-actions{width:100%;}
 }
 
 /* ---------- Préférences de mouvement réduit ---------- */
@@ -461,7 +481,7 @@ ul{margin:0;padding:0;list-style:none;}
   background:linear-gradient(90deg,var(--red),var(--gold),var(--red));}
 .page-hero::after{content:"";position:absolute;top:-120px;right:-80px;width:320px;height:320px;border-radius:50%;
   background:radial-gradient(circle,rgba(212,175,55,.18),transparent 70%);pointer-events:none;}
-.page-hero-title{font-size:clamp(2.2rem,6vw,3.6rem);color:#fff;position:relative;
+.page-hero-title{font-size:clamp(1.95rem,6.2vw,3.6rem);color:#fff;position:relative;
   background:linear-gradient(180deg,#fff 40%,var(--gold-soft));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
 .page-hero-sub{color:var(--muted-dark);max-width:620px;margin:14px 0 24px;font-size:1.08rem;position:relative;}
 .page-hero .btn{position:relative;}
@@ -563,4 +583,33 @@ ul{margin:0;padding:0;list-style:none;}
   }
   .hero-content{padding-top:0;align-self:flex-end;padding-bottom:30px;}
   .hero{align-items:flex-end;}
+}
+
+/* =========================================================
+   PASSE DE FINITION PREMIUM
+   ========================================================= */
+
+/* Accroches de section resserrées */
+.section-head-tight{margin-bottom:30px;}
+
+/* Carte : section vedettes + raccord avec la liste */
+.carte-vedettes{background:var(--cream);padding-bottom:18px;}
+.carte-vedettes + .carte{padding-top:30px;}
+
+/* Avis : bloc plus compact et élégant */
+.avis-box{padding:32px 28px;max-width:600px;}
+.avis-stars{font-size:1.5rem;margin-bottom:10px;}
+.avis-lead{font-size:1.3rem;margin-bottom:6px;}
+.avis-text{font-size:.96rem;margin-bottom:22px;}
+
+/* Hiérarchie des boutons : tertiaire plus discret */
+.btn-ghost-light{font-weight:600;}
+.pizza-card-cta .btn{box-shadow:none;}
+
+/* CTA contact (accueil) un peu plus ramassé */
+.contact-cta{padding:66px 0;}
+
+/* Micro-interaction douce sur les cartes vedettes */
+@media (hover:hover){
+  .pizza-card-media img{will-change:transform;}
 }
