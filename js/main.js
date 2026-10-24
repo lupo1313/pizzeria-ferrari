@@ -69,15 +69,62 @@
     requestAnimationFrame(sweep); setTimeout(sweep, 700);
   }
 
-  /* ---- Ouvert / Fermé ---- */
+  /* ---- Ouvert / Fermé (heure de Marseille, Europe/Paris) ---- */
+  function marseilleMinutes() {
+    try {
+      const p = new Intl.DateTimeFormat("fr-FR", { timeZone: "Europe/Paris", hour: "2-digit", minute: "2-digit", hour12: false }).formatToParts(new Date());
+      return (+p.find(x => x.type === "hour").value) * 60 + (+p.find(x => x.type === "minute").value);
+    } catch (e) { const d = new Date(); return d.getHours() * 60 + d.getMinutes(); }
+  }
   function openClosed() {
-    const el = $("#openclosed"); if (!el) return;
-    const m = new Date().getHours() * 60 + new Date().getMinutes();
-    const open = m >= 1080 && m <= 1350;
-    el.hidden = false; el.classList.add(open ? "is-open" : "is-closed");
-    el.innerHTML = open
-      ? '<span class="oc-dot"></span><strong>Ouvert</strong><span class="oc-note">jusqu\'à 22h30</span>'
-      : '<span class="oc-dot"></span><strong>Fermé</strong><span class="oc-note">ouvert tous les jours dès 18h</span>';
+    const els = $$(".js-oc"); if (!els.length) return;
+    function paint() {
+      const open = (() => { const m = marseilleMinutes(); return m >= 1080 && m <= 1350; })();
+      els.forEach(el => {
+        el.hidden = false;
+        el.classList.remove("is-open", "is-closed");
+        el.classList.add(open ? "is-open" : "is-closed");
+        el.innerHTML = open
+          ? '<span class="oc-dot"></span><strong>Ouvert</strong><span class="oc-note">jusqu\'à 22h30</span>'
+          : '<span class="oc-dot"></span><strong>Fermé</strong><span class="oc-note">ouvre à 18h</span>';
+      });
+    }
+    paint();
+    setInterval(paint, 60000);
+  }
+
+  /* ---- Sous-menu « La carte » (accordéon mobile ; survol/focus géré en CSS) ---- */
+  function initSubmenu() {
+    $$(".sub-toggle").forEach(btn => {
+      btn.addEventListener("click", e => {
+        e.preventDefault();
+        const item = btn.closest(".has-sub");
+        const open = item.classList.toggle("open");
+        btn.setAttribute("aria-expanded", String(open));
+      });
+    });
+  }
+
+  /* ---- FAQ accordéon ---- */
+  function initFaq() {
+    $$(".faq-item").forEach(item => {
+      const btn = $(".faq-q", item);
+      if (!btn) return;
+      btn.addEventListener("click", () => {
+        const open = item.classList.toggle("open");
+        btn.setAttribute("aria-expanded", String(open));
+      });
+    });
+  }
+
+  /* ---- Réseaux sociaux (placeholders tant que les comptes ne sont pas fournis) ---- */
+  function renderSocial(cfg) {
+    const el = $("#footer-social"); if (!el) return;
+    const s = (cfg && cfg.social) || {};
+    const chip = (url, label) => url
+      ? `<a href="${esc(url)}" target="_blank" rel="noopener" class="social-chip">${label}</a>`
+      : `<span class="social-chip is-soon" aria-disabled="true" title="Bientôt disponible">${label}<small>bientôt</small></span>`;
+    el.innerHTML = `<p class="social-label">Suivez-nous</p><div class="social-row">${chip(s.instagram, "Instagram")}${chip(s.tiktok, "TikTok")}</div>`;
   }
 
   /* ---- Rail vedettes ---- */
@@ -130,9 +177,9 @@
 
   function renderSides(menu) {
     const row = (n, d, p) => `<div class="side-row"><span class="side-name">${esc(n)}${d ? ` <span class="side-detail">${esc(d)}</span>` : ""}</span><span class="side-price">${price(p)}</span></div>`;
-    const d = $("#desserts-col"); if (d) d.innerHTML = `<h3>Desserts</h3><p class="side-sub">Gourmandises</p>` + menu.desserts.map(x => row(x.name, x.ingredients, x.price)).join("");
-    const b = $("#drinks-col"); if (b) b.innerHTML = `<h3>Boissons</h3><p class="side-sub">Fraîcheur</p>` + menu.drinks.map(x => row(x.name, x.detail, x.price)).join("");
-    const w = $("#wines-col"); if (w) w.innerHTML = `<h3>Vins</h3><p class="side-sub">75 cl</p>` + menu.wines.map(x => row(x.name, "", x.price)).join("");
+    const d = $("#desserts"); if (d) d.innerHTML = `<h3>Desserts</h3><p class="side-sub">Gourmandises</p>` + menu.desserts.map(x => row(x.name, x.ingredients, x.price)).join("");
+    const b = $("#boissons"); if (b) b.innerHTML = `<h3>Boissons</h3><p class="side-sub">Fraîcheur</p>` + menu.drinks.map(x => row(x.name, x.detail, x.price)).join("");
+    const w = $("#vins"); if (w) w.innerHTML = `<h3>Vins</h3><p class="side-sub">75 cl</p>` + menu.wines.map(x => row(x.name, "", x.price)).join("");
   }
 
   /* ---- Offres (campagne) ---- */
@@ -214,6 +261,8 @@
 
   injectIcons(document);
   openClosed();
+  initSubmenu();
+  initFaq();
   fab();
 
   Promise.all([
@@ -221,8 +270,8 @@
     fetch("data/config.json").then(r => r.json()).catch(() => ({}))
   ]).then(([menu, cfg]) => {
     renderRail(menu); renderMenu(menu); renderSpecial(menu); renderSides(menu);
-    renderPromo(menu); renderReviews(cfg); renderDelivery(cfg); mapLazy();
-    $$(".rail-card, .story-media, .promo-item").forEach(el => el.classList.add("reveal"));
+    renderPromo(menu); renderReviews(cfg); renderDelivery(cfg); renderSocial(cfg); mapLazy();
+    $$(".rail-card, .story-media, .promo-item, .faq-item").forEach(el => el.classList.add("reveal"));
     initReveal();
-  }).catch(err => { console.error("Données :", err); mapLazy(); initReveal(); });
+  }).catch(err => { console.error("Données :", err); renderSocial({}); mapLazy(); initReveal(); });
 })();

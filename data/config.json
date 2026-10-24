@@ -28,8 +28,15 @@
   "maps_embed_url": "https://maps.google.com/maps?q=178%20rue%20Ferrari%2013005%20Marseille&t=&z=16&ie=UTF8&iwloc=&output=embed",
   "delivery": {
     "livraison_offerte": true,
+    "free_no_minimum": true,
+    "zones_text": "1er, 2e, 4e, 5e, 6e, 7e et 10e arrondissements de Marseille",
+    "zones": ["13001", "13002", "13004", "13005", "13006", "13007", "13010"],
     "uber_eats_url": "https://www.ubereats.com/fr/search?q=Pizzeria%20Ferrari%20Marseille",
     "deliveroo_url": "https://deliveroo.fr/fr/search?q=Pizzeria%20Ferrari%20Marseille"
+  },
+  "social": {
+    "instagram": "",
+    "tiktok": ""
   },
   "rating": { "value": "3,7", "count": "51", "source": "Google" },
   "reviews": [],

@@ -10,19 +10,20 @@
   <section class="section contact">
     <div class="container contact-grid">
       <div class="contact-col">
-        <div id="openclosed" class="openclosed" hidden></div>
+        <div id="openclosed" class="openclosed js-oc" hidden></div>
         <ul class="c-list">
           <li class="c-line"><span class="c-label">Adresse</span><span class="c-value">178 rue Ferrari, 13005 Marseille</span></li>
           <li class="c-line"><span class="c-label">Téléphone</span><span class="c-value"><a href="tel:+33491428602">04 91 42 86 02</a></span></li>
           <li class="c-line"><span class="c-label">Horaires</span><span class="c-value">Tous les jours, 18h00 – 22h30</span></li>
+          <li class="c-line"><span class="c-label">Livraison</span><span class="c-value">Gratuite, sans minimum — 1<sup>er</sup>, 2<sup>e</sup>, 4<sup>e</sup>, 5<sup>e</sup>, 6<sup>e</sup>, 7<sup>e</sup> et 10<sup>e</sup></span></li>
         </ul>
         <div class="contact-actions">
           <a href="tel:+33491428602" class="btn btn--primary"><span class="ico" data-ico="phone" aria-hidden="true"></span> Appeler</a>
           <a href="https://www.google.com/maps/dir/?api=1&destination=178+rue+Ferrari+13005+Marseille" class="btn btn--line" target="_blank" rel="noopener"><span class="ico" data-ico="route" aria-hidden="true"></span> Itinéraire</a>
         </div>
         <div class="delivery">
-          <h3>Livraison</h3>
-          <p>La livraison est offerte. Commandez par téléphone ou via vos applications habituelles.</p>
+          <h3>Applications de livraison</h3>
+          <p>Commandez aussi via vos applications habituelles.</p>
           <div class="delivery-links" id="delivery-links"></div>
         </div>
       </div>
@@ -34,6 +35,38 @@
             <button type="button" class="btn btn--light" id="map-load-btn">Afficher la carte</button>
             <p class="map-privacy">En affichant la carte, vous acceptez le dépôt de cookies par Google Maps.</p>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section faq">
+    <div class="container faq-wrap">
+      <header class="sec-head">
+        <span class="sec-kicker">Questions fréquentes</span>
+        <h2 class="sec-title">On vous répond</h2>
+      </header>
+      <div class="faq-list">
+        <div class="faq-item">
+          <h3 class="faq-h"><button type="button" class="faq-q" id="faq1q" aria-expanded="false" aria-controls="faq1a">Quels sont les horaires d'ouverture&nbsp;?</button></h3>
+          <div class="faq-a" id="faq1a" role="region" aria-labelledby="faq1q"><div class="faq-a-in"><p>Nous sommes ouverts <strong>7 jours sur 7, de 18h00 à 22h30</strong>.</p></div></div>
+        </div>
+        <div class="faq-item">
+          <h3 class="faq-h"><button type="button" class="faq-q" id="faq2q" aria-expanded="false" aria-controls="faq2a">Proposez-vous la livraison&nbsp;?</button></h3>
+          <div class="faq-a" id="faq2a" role="region" aria-labelledby="faq2q"><div class="faq-a-in"><p>Oui. Vous pouvez être livré, commander à emporter ou venir déguster sur place. Pour commander, appelez le <a href="tel:+33491428602">04 91 42 86 02</a>.</p></div></div>
+        </div>
+        <div class="faq-item">
+          <h3 class="faq-h"><button type="button" class="faq-q" id="faq3q" aria-expanded="false" aria-controls="faq3a">Dans quels arrondissements livrez-vous&nbsp;?</button></h3>
+          <div class="faq-a" id="faq3a" role="region" aria-labelledby="faq3q"><div class="faq-a-in"><p>Nous livrons dans les <strong>1<sup>er</sup>, 2<sup>e</sup>, 4<sup>e</sup>, 5<sup>e</sup>, 6<sup>e</sup>, 7<sup>e</sup> et 10<sup>e</sup> arrondissements</strong> de Marseille.</p></div></div>
+        </div>
+        <div class="faq-item">
+          <h3 class="faq-h"><button type="button" class="faq-q" id="faq4q" aria-expanded="false" aria-controls="faq4a">La livraison est-elle gratuite&nbsp;?</button></h3>
+          <div class="faq-a" id="faq4a" role="region" aria-labelledby="faq4q"><div class="faq-a-in"><p>Oui, la livraison est <strong>gratuite et sans minimum de commande</strong> dans nos arrondissements desservis.</p></div></div>
+        </div>
+        <div class="faq-item">
+          <h3 class="faq-h"><button type="button" class="faq-q" id="faq5q" aria-expanded="false" aria-controls="faq5a">Comment commander&nbsp;?</button></h3>
+          <div class="faq-a" id="faq5a" role="region" aria-labelledby="faq5q"><div class="faq-a-in"><p>Appelez-nous au <a href="tel:+33491428602">04 91 42 86 02</a>. Chaque pizza est préparée à la commande et cuite au feu de bois.</p></div></div>
         </div>
       </div>
     </div>

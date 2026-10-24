@@ -46,8 +46,8 @@ const PAGES = [
   {
     slug: "contact.html", nav: "contact", hero: false,
     title: "Contact & accès | Pizzeria Ferrari - 178 rue Ferrari, 13005 Marseille",
-    description: "Pizzeria Ferrari, 178 rue Ferrari, 13005 Marseille. Horaires tous les jours 18h-22h30, téléphone 04 91 42 86 02, itinéraire, livraison. Contactez-nous.",
-    breadcrumb: "Contact"
+    description: "Pizzeria Ferrari, 178 rue Ferrari, 13005 Marseille. Ouvert 7j/7 18h-22h30, 04 91 42 86 02. Livraison gratuite sans minimum (1er, 2e, 4e, 5e, 6e, 7e, 10e).",
+    breadcrumb: "Contact", faq: true
   },
   {
     slug: "mentions-legales.html", nav: "", hero: false,
@@ -66,8 +66,21 @@ const restaurantJsonLd = () => JSON.stringify({
   priceRange: "€", servesCuisine: ["Pizza", "Italienne"],
   address: { "@type": "PostalAddress", streetAddress: "178 rue Ferrari", postalCode: "13005", addressLocality: "Marseille", addressRegion: "Provence-Alpes-Côte d'Azur", addressCountry: "FR" },
   hasMap: "https://www.google.com/maps/dir/?api=1&destination=178+rue+Ferrari+13005+Marseille",
+  openingHours: "Mo-Su 18:00-22:30",
   openingHoursSpecification: [{ "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"], opens: "18:00", closes: "22:30" }],
-  acceptsReservations: "False", areaServed: "Marseille"
+  acceptsReservations: "False",
+  areaServed: ["Marseille 1er", "Marseille 2e", "Marseille 4e", "Marseille 5e", "Marseille 6e", "Marseille 7e", "Marseille 10e"]
+});
+
+const faqJsonLd = () => JSON.stringify({
+  "@context": "https://schema.org", "@type": "FAQPage",
+  mainEntity: [
+    { "@type": "Question", name: "Quels sont les horaires d'ouverture ?", acceptedAnswer: { "@type": "Answer", text: "La Pizzeria Ferrari est ouverte 7 jours sur 7, de 18h00 à 22h30." } },
+    { "@type": "Question", name: "Proposez-vous la livraison ?", acceptedAnswer: { "@type": "Answer", text: "Oui. La livraison est gratuite, sans minimum de commande. Vous pouvez aussi commander à emporter ou venir sur place." } },
+    { "@type": "Question", name: "Dans quels arrondissements livrez-vous ?", acceptedAnswer: { "@type": "Answer", text: "Nous livrons dans les 1er, 2e, 4e, 5e, 6e, 7e et 10e arrondissements de Marseille." } },
+    { "@type": "Question", name: "La livraison est-elle gratuite ?", acceptedAnswer: { "@type": "Answer", text: "Oui, la livraison est gratuite et sans minimum de commande dans nos arrondissements desservis." } },
+    { "@type": "Question", name: "Comment commander ?", acceptedAnswer: { "@type": "Answer", text: "Appelez-nous au 04 91 42 86 02. Votre commande est préparée à la commande et cuite au feu de bois." } }
+  ]
 });
 
 const breadcrumbJsonLd = (page) => JSON.stringify({
@@ -80,9 +93,18 @@ const breadcrumbJsonLd = (page) => JSON.stringify({
 
 /* ---------- Gabarits partagés ---------- */
 function navHtml(active, footer = false) {
-  return NAV.map(([href, label, key]) =>
-    `<a href="${href}"${key === active ? ' aria-current="page" class="is-active"' : ""}>${label}</a>`
-  ).join("\n      ");
+  return NAV.map(([href, label, key]) => {
+    const link = `<a href="${href}"${key === active ? ' aria-current="page" class="is-active"' : ""}>${label}</a>`;
+    if (key === "carte" && !footer) {
+      return `<div class="nav-item has-sub">${link}<button type="button" class="sub-toggle" aria-label="Afficher les catégories de la carte" aria-expanded="false"><span aria-hidden="true"></span></button>
+        <ul class="submenu">
+          <li><a href="carte.html#pizzas">Pizzas</a></li>
+          <li><a href="carte.html#boissons">Boissons</a></li>
+          <li><a href="carte.html#desserts">Desserts</a></li>
+        </ul></div>`;
+    }
+    return link;
+  }).join("\n      ");
 }
 
 function head(page) {
@@ -93,6 +115,7 @@ function head(page) {
 <link rel="preload" as="image" href="assets/img/hero-mobile.webp" media="(max-width: 699px)">` : "";
   let jsonld = `<script type="application/ld+json">${restaurantJsonLd()}</script>`;
   if (page.breadcrumb && !page.noindex) jsonld += `\n<script type="application/ld+json">${breadcrumbJsonLd(page)}</script>`;
+  if (page.faq) jsonld += `\n<script type="application/ld+json">${faqJsonLd()}</script>`;
   return `<!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -142,6 +165,7 @@ function header(active) {
     <nav class="main-nav" id="main-nav" aria-label="Navigation principale">
       ${navHtml(active)}
     </nav>
+    <a href="contact.html" class="oc-badge js-oc" hidden aria-label="Horaires d'ouverture"></a>
     <div class="header-cta">
       <a href="tel:+33491428602" class="btn btn--primary btn-order-header">
         <span class="ico" aria-hidden="true">${ICON.phone}</span><span>Commander</span>
@@ -164,19 +188,21 @@ function footer(active) {
         <img src="assets/logo/logo-header.png" alt="Pizzeria Ferrari" width="200" height="57" loading="lazy">
       </picture>
       <p>La tradition du feu de bois depuis 1980.<br>Pizzeria familiale à Marseille 5e.</p>
-      <div class="footer-social">
-        <a href="https://g.page/r/CZF5BZ4UyT6UEBM/review" target="_blank" rel="noopener" class="btn btn--light btn--sm">Avis Google</a>
-      </div>
+      <div class="footer-social" id="footer-social"></div>
     </div>
     <nav class="footer-nav" aria-label="Pied de page">
       <h3>Navigation</h3>
       ${navHtml(active, true)}
+      <a href="mentions-legales.html">Mentions légales</a>
     </nav>
     <div class="footer-contact">
-      <h3>Contact</h3>
-      <p>178 rue Ferrari<br>13005 Marseille</p>
-      <p><a href="tel:+33491428602">04 91 42 86 02</a></p>
-      <p>Tous les jours<br>18h00 - 22h30</p>
+      <h3>Nous contacter</h3>
+      <address>
+        <p>178 rue Ferrari<br>13005 Marseille</p>
+        <p><a href="tel:+33491428602">04 91 42 86 02</a></p>
+        <p class="footer-hours"><span class="footer-hours-k">Ouvert 7j/7</span><br>de 18h00 à 22h30</p>
+      </address>
+      <a href="https://g.page/r/CZF5BZ4UyT6UEBM/review" target="_blank" rel="noopener" class="btn btn--light btn--sm">Laisser un avis Google</a>
     </div>
   </div>
   <div class="footer-bottom">
