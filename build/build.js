@@ -20,7 +20,7 @@ const NAV = [
 
 const PAGES = [
   {
-    slug: "index.html", nav: "accueil", hero: true,
+    slug: "index.html", nav: "accueil", hero: true, faq: true,
     title: "Pizzeria Ferrari | Pizza au feu de bois à Marseille 13005 depuis 1980",
     description: "Depuis 1980, la Pizzeria Ferrari régale Marseille : 35 pizzas généreuses cuites au feu de bois, à déguster sur place, à emporter ou livrées gratuitement. 178 rue Ferrari, 13005. Commandez au 04 91 42 86 02.",
     breadcrumb: null

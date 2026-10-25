@@ -144,7 +144,7 @@
     el.innerHTML = `<p class="social-label">Suivez-nous</p><div class="social-row">${chip(s.instagram, "Instagram")}${chip(s.tiktok, "TikTok")}</div>`;
   }
 
-  /* ---- Rail vedettes ---- */
+  /* ---- Rail vedettes (carrousel enrichi) ---- */
   function renderRail(menu) {
     const rails = $$(".js-rail"); if (!rails.length) return;
     const all = {}; menu.categories.forEach(c => c.pizzas.forEach(p => all[p.id] = p));
@@ -156,12 +156,40 @@
         const img = p.img || "assets/img/p-" + id + ".webp";
         const tag = p.signature ? '<span class="rail-tag">La signature</span>' : "";
         return `<article class="rail-card">
-          <div class="rail-card-media"><img src="${esc(img)}" alt="Pizza ${esc(p.name)} au feu de bois" loading="lazy" width="440" height="550"></div>
-          ${tag}
-          <div class="rail-meta"><span class="rail-name">${esc(p.name)}</span><span class="rail-price">${price(p.price)}</span></div>
+          <div class="rail-card-media">
+            <img src="${esc(img)}" alt="Pizza ${esc(p.name)} au feu de bois" loading="lazy" width="440" height="303">
+            ${tag}
+            <div class="rail-meta"><span class="rail-name">${esc(p.name)}</span><span class="rail-price">${price(p.price)}</span></div>
+          </div>
+          <div class="rail-card-info"><p class="rail-card-desc">${esc(p.ingredients)}</p></div>
         </article>`;
       }).join("");
+      initFeaturedRail(rail);
     });
+  }
+
+  function initFeaturedRail(rail) {
+    const cards = $$(".rail-card", rail); if (!cards.length) return;
+    const prev = $("#rail-prev"), next = $("#rail-next"), dotsWrap = $("#rail-dots");
+    if (dotsWrap) dotsWrap.innerHTML = cards.map((_, i) =>
+      `<button type="button" class="rail-dot${i === 0 ? " active" : ""}" data-i="${i}" aria-label="Pizza ${i + 1}"></button>`).join("");
+    const dots = dotsWrap ? $$(".rail-dot", dotsWrap) : [];
+    const goTo = i => { const c = cards[i]; if (c) c.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" }); };
+    let current = 0;
+    const syncArrows = () => {
+      if (prev) prev.disabled = current <= 0;
+      if (next) next.disabled = current >= cards.length - 1;
+    };
+    if (prev) prev.addEventListener("click", () => goTo(Math.max(0, current - 1)));
+    if (next) next.addEventListener("click", () => goTo(Math.min(cards.length - 1, current + 1)));
+    dots.forEach(d => d.addEventListener("click", () => goTo(+d.dataset.i)));
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver(es => {
+        es.forEach(e => { if (e.isIntersecting) { current = cards.indexOf(e.target); dots.forEach((d, j) => d.classList.toggle("active", j === current)); syncArrows(); } });
+      }, { root: rail, threshold: 0.6 });
+      cards.forEach(c => io.observe(c));
+    }
+    syncArrows();
   }
 
   /* ---- Carte ---- */
@@ -293,7 +321,7 @@
   /* ---- FAB : masqué dès qu'une zone d'appel est visible ---- */
   function fab() {
     const f = $("#mobile-cta"); if (!f || !("IntersectionObserver" in window)) return;
-    const zones = $$(".site-footer, .contact, .cta-band, .page-head, .hero"); if (!zones.length) return;
+    const zones = $$(".site-footer, .contact, .cta-band, .final-cta, .delivery-sec, .page-head, .hero"); if (!zones.length) return;
     const vis = new Set();
     const io = new IntersectionObserver(es => { es.forEach(e => { e.isIntersecting ? vis.add(e.target) : vis.delete(e.target); }); f.classList.toggle("is-hidden", vis.size > 0); }, { rootMargin: "0px 0px -8% 0px" });
     zones.forEach(z => io.observe(z));
@@ -312,7 +340,7 @@
   ]).then(([menu, cfg]) => {
     renderRail(menu); renderMenu(menu); renderSpecial(menu); renderSides(menu);
     renderPromo(menu); renderReviews(cfg); renderDelivery(cfg); renderSocial(cfg); mapLazy();
-    $$(".rail-card, .story-media, .promo-item, .faq-item").forEach(el => el.classList.add("reveal"));
+    $$(".story-media, .promo-item, .engage-card").forEach(el => el.classList.add("reveal"));
     initReveal();
   }).catch(err => { console.error("Données :", err); renderSocial({}); mapLazy(); initReveal(); });
 })();
