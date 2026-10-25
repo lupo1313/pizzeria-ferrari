@@ -849,3 +849,30 @@ body.nav-open .mobile-cta{opacity:0;pointer-events:none;}
   .maison-photo{width:84%;max-width:360px;margin-top:-36%;}
   .maison-find{bottom:-20px;}
 }
+
+/* =========================================================
+   NOTRE MAISON — visuel composite unique (illustration + devanture + texte)
+   ========================================================= */
+.maison{background:#f6ecda;}                 /* accordé au crème du composite */
+/* Équivalent texte accessible (titre + paragraphe sont dans l'image) */
+.maison-sr{position:absolute !important;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0;}
+.maison-scene{position:relative;max-width:780px;margin:0 auto;}
+.maison-composite{display:block;width:100%;height:auto;
+  -webkit-mask-image:
+    linear-gradient(to bottom,transparent 0,#000 3.5%,#000 97%,transparent 100%),
+    linear-gradient(to right,transparent 0,#000 3.5%,#000 96.5%,transparent 100%);
+  -webkit-mask-composite:source-in;
+          mask-image:
+    linear-gradient(to bottom,transparent 0,#000 3.5%,#000 97%,transparent 100%),
+    linear-gradient(to right,transparent 0,#000 3.5%,#000 96.5%,transparent 100%);
+          mask-composite:intersect;}
+.maison-find{position:absolute;left:50%;bottom:3.5%;transform:translateX(-50%);white-space:nowrap;
+  background:#0f0d0b;color:#fff;border:0;padding:.95em 1.7em;
+  box-shadow:0 16px 34px -16px rgba(0,0,0,.6);}
+.maison-find:hover{background:#000;color:#fff;transform:translateX(-50%) translateY(-1px);}
+.maison-find .ico svg{width:1.05em;height:1.05em;}
+@media (max-width:560px){
+  .maison-scene{max-width:440px;}
+  .maison-find{bottom:3%;padding:.82em 1.35em;font-size:.92rem;}
+}
