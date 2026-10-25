@@ -272,6 +272,7 @@
     }
     const cards = list.map(rv => {
       const initial = esc((rv.author || "?").trim().charAt(0).toUpperCase());
+      const long = (rv.text || "").length > 150;
       return `<figure class="rev-card">
         <div class="rev-card-top">
           <span class="rev-avatar" aria-hidden="true">${initial}</span>
@@ -279,12 +280,38 @@
           <span class="rev-g" title="Avis Google">${GOOGLE_G}</span>
         </div>
         <div class="rev-stars" aria-hidden="true">${stars(rv.rating)}</div>
-        <blockquote class="rev-quote">${esc(rv.text)}</blockquote>
+        <blockquote class="rev-quote${long ? " clamped" : ""}">${esc(rv.text)}</blockquote>
+        ${long ? '<button type="button" class="rev-more">Lire la suite</button>' : ""}
       </figure>`;
     }).join("");
     const dots = list.map((_, i) => `<button type="button" class="rev-dot${i === 0 ? " active" : ""}" data-i="${i}" aria-label="Aller à l'avis ${i + 1}"></button>`).join("");
     el.innerHTML = head + `<div class="rev-rail-wrap"><div class="rev-rail" id="rev-rail">${cards}</div><div class="rev-dots" id="rev-dots">${dots}</div></div>`;
+    $$(".rev-more", el).forEach(b => b.addEventListener("click", () => {
+      const q = b.previousElementSibling;
+      const open = !q.classList.toggle("clamped");
+      b.textContent = open ? "Réduire" : "Lire la suite";
+    }));
     initReviewRail();
+  }
+
+  /* ---- Carte Marseille (SVG inline, données Etalab/IGN) ---- */
+  function initMap() {
+    const tip = $("#zone-tip"), zones = $$(".am--on");
+    if (!zones.length) return;
+    const base = tip ? tip.textContent : "";
+    const show = z => {
+      if (tip) { const n = z.dataset.arr; tip.textContent = `Marseille ${n}${n === "1" ? "er" : "e"} arrondissement · ${z.dataset.cp}`; }
+      zones.forEach(x => x.classList.toggle("is-active", x === z));
+    };
+    const clear = () => { if (tip) tip.textContent = base; zones.forEach(x => x.classList.remove("is-active")); };
+    zones.forEach(z => {
+      z.addEventListener("mouseenter", () => show(z));
+      z.addEventListener("mouseleave", clear);
+      z.addEventListener("focus", () => show(z));
+      z.addEventListener("blur", clear);
+      z.addEventListener("click", () => show(z));
+      z.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); show(z); } });
+    });
   }
 
   function initReviewRail() {
@@ -332,6 +359,7 @@
   initSubmenu();
   initFaq();
   initFooterAccordion();
+  initMap();
   fab();
 
   Promise.all([

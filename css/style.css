@@ -90,7 +90,7 @@ ul{margin:0;padding:0;list-style:none;}
   transition:background .3s var(--ease),box-shadow .3s,height .3s,border-color .3s;
   border-bottom:1px solid transparent;
 }
-.site-header.scrolled{background:rgba(20,18,16,.96);border-bottom-color:rgba(194,160,83,.18);}
+.site-header.scrolled{background:var(--dark);border-bottom-color:rgba(194,160,83,.22);box-shadow:0 8px 30px -22px rgba(0,0,0,.8);}
 .header-inner{display:flex;align-items:center;justify-content:space-between;gap:18px;width:100%;}
 .brand-logo{height:50px;width:auto;}
 .main-nav{display:flex;gap:30px;margin-left:auto;}
@@ -384,7 +384,7 @@ body.nav-open .mobile-cta{opacity:0;pointer-events:none;}
   .main-nav a::after{display:none;}
   .burger{display:flex;}
   .header-cta{display:none;}
-  .site-header{background:rgba(20,18,16,.95);}
+  .site-header{background:var(--dark);}
   .menu-grid{grid-template-columns:1fr;}
   .m-sides{grid-template-columns:1fr;gap:30px;}
   .story-row{grid-template-columns:1fr;gap:26px;}
@@ -709,3 +709,105 @@ body.nav-open .mobile-cta{opacity:0;pointer-events:none;}
 @media (max-width:380px){
   .hero-features li{font-size:.56rem;}
 }
+
+/* =========================================================
+   PASSE FIDÉLITÉ — maquette 2.0
+   ========================================================= */
+
+/* ---- Incontournables : cartes compactes, ingrédients lisibles ---- */
+.incont .rail-card-media{aspect-ratio:4/3;}
+.incont .rail-name{font-size:1.22rem;}
+.incont .rail-price{font-size:1.1rem;}
+.incont .rail-card-info{padding:12px 16px 15px;}
+.rail-card-desc{color:#4a4335;}
+
+/* ---- Savoir-faire : visuel devanture ---- */
+.craft-media img{object-position:center 55%;}
+
+/* ---- Livraison A : séquence immersive ---- */
+.delivery-hero{position:relative;min-height:62vh;display:flex;align-items:flex-end;color:#fff;overflow:hidden;background:var(--dark);}
+.delivery-hero-media{position:absolute;inset:0;z-index:0;}
+.delivery-hero-media img{width:100%;height:100%;object-fit:cover;object-position:center 60%;}
+.delivery-hero-shade{position:absolute;inset:0;z-index:1;
+  background:linear-gradient(0deg,rgba(14,12,10,.94) 0%,rgba(14,12,10,.55) 40%,rgba(14,12,10,.2) 72%,rgba(14,12,10,.4) 100%);}
+.delivery-hero-inner{position:relative;z-index:2;padding:70px 0 58px;max-width:560px;}
+.delivery-hero-inner .sec-kicker{color:var(--gold);}
+.delivery-hero .delivery-title{font-size:clamp(2.2rem,6vw,3.4rem);color:#fff;margin:0 0 16px;text-shadow:0 2px 20px rgba(0,0,0,.5);}
+.delivery-hero .delivery-title em{font-style:italic;font-weight:600;color:var(--gold);}
+.delivery-hero .delivery-text{color:#efe7d9;font-size:1.04rem;max-width:44ch;margin:0 0 24px;text-shadow:0 1px 10px rgba(0,0,0,.5);}
+.delivery-hero .delivery-text sup{font-size:.62em;}
+
+/* ---- Livraison B : repères compacts sur crème ---- */
+.delivery-info .delivery-perks{display:flex;flex-wrap:wrap;justify-content:center;gap:16px 40px;margin:0 auto 52px;max-width:none;}
+.delivery-info .delivery-perks li{flex:0 1 auto;flex-direction:row;align-items:center;gap:12px;padding:0;border:0;background:none;border-radius:0;}
+.delivery-info .dp-ico{color:var(--red);}
+.delivery-info .dp-ico svg{width:26px;height:26px;}
+.delivery-info .dp-k{color:var(--ink);font-family:var(--ff);font-weight:600;font-size:1rem;}
+
+/* ---- Livraison C : carte Marseille (SVG, données Etalab/IGN) ---- */
+.zones-map{max-width:600px;margin:0 auto;}
+.zones-map-head{text-align:center;margin-bottom:22px;}
+.zones-map-head .sec-kicker{color:var(--muted);}
+.zones-map-head p{color:var(--muted);max-width:48ch;margin:4px auto 0;font-size:.98rem;}
+.map-figure{margin:0;}
+.mrs-map{width:100%;height:auto;display:block;background:#e9dec9;border-radius:16px;border:1px solid var(--line);}
+.am{stroke:var(--bg);stroke-width:1.4;stroke-linejoin:round;vector-effect:non-scaling-stroke;transition:fill .2s var(--ease);}
+.am--off{fill:#d2c4a9;}
+.am--on{fill:#c0563b;cursor:pointer;}
+.am--on:hover,.am--on.is-active{fill:#9e3f29;}
+.am--on:focus{outline:none;}
+.am--on:focus-visible{stroke:var(--gold);stroke-width:2.6;}
+.aml{pointer-events:none;font-family:var(--ff-display);}
+.aml--on{fill:#fff;font-weight:900;font-size:30px;}
+.aml--off{fill:#96886f;font-weight:600;font-size:21px;}
+.map-legend{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;justify-content:center;margin-top:16px;font-size:.84rem;color:var(--muted);}
+.ml-item{display:inline-flex;align-items:center;gap:7px;}
+.ml-swatch{width:14px;height:14px;border-radius:4px;flex:none;}
+.ml-swatch--on{background:#c0563b;}
+.ml-swatch--off{background:#d2c4a9;}
+.ml-tip{flex-basis:100%;text-align:center;color:var(--ink);font-weight:600;min-height:1.2em;}
+.zones-cta{display:flex;justify-content:center;margin-top:34px;}
+
+/* ---- Notre maison : ordre maquette (titre, texte, image, bouton) ---- */
+.story-row--home{display:grid;gap:24px;grid-template-columns:1fr;grid-template-areas:"text" "media" "cta";}
+.story-row--home .story-text{grid-area:text;}
+.story-row--home .story-media{grid-area:media;margin:0;}
+.story-row--home .story-cta{grid-area:cta;}
+.story-row--home .story-body-text{color:#413c33;font-size:1.05rem;margin:0;}
+.story-row--home .story-title sup{font-size:.5em;}
+@media (min-width:861px){
+  .story-row--home{grid-template-columns:1.05fr 1fr;grid-template-areas:"media text" "media cta";align-items:center;column-gap:56px;row-gap:24px;}
+  .story-row--home .story-media{grid-row:1 / span 2;align-self:stretch;}
+  .story-row--home .story-cta{align-self:start;}
+}
+
+/* ---- Engagements : respiration compacte (pictos, pas de cartes) ---- */
+.engage-row{display:flex;flex-wrap:wrap;justify-content:center;gap:30px 48px;}
+.engage-row li{display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;width:140px;}
+.er-ico{color:var(--red);}
+.er-ico svg{width:30px;height:30px;}
+.er-label{font-family:var(--ff-display);font-weight:600;font-size:1rem;color:var(--ink);line-height:1.3;}
+
+/* ---- Avis : cartes compactes + "Lire la suite" ---- */
+.rev-card .rev-quote.clamped{display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;}
+.rev-more{margin-top:10px;background:none;border:0;color:var(--red);font-family:var(--ff);font-weight:600;font-size:.85rem;cursor:pointer;padding:0;align-self:flex-start;}
+.rev-more:hover{text-decoration:underline;}
+
+/* ---- Responsive fidélité ---- */
+@media (max-width:860px){
+  .delivery-hero{min-height:56vh;}
+  .delivery-hero-inner{padding:60px 0 46px;}
+  .delivery-info .delivery-perks{gap:14px 26px;}
+}
+@media (max-width:560px){
+  .delivery-info .delivery-perks{flex-direction:column;align-items:flex-start;gap:16px;max-width:320px;margin-left:auto;margin-right:auto;}
+  .aml--on{font-size:34px;}
+  .aml--off{font-size:24px;}
+  .engage-row{gap:26px 30px;}
+  .engage-row li{width:132px;}
+}
+
+/* ---- FAB compact : bouton rond icône, non envahissant (passe fidélité) ---- */
+.mobile-cta{width:54px;height:54px;padding:0;gap:0;justify-content:center;border-radius:50%;}
+.mobile-cta-label{display:none;}
+.mobile-cta-ico svg{width:22px;height:22px;}

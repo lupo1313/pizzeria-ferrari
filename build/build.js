@@ -218,7 +218,7 @@ function footer(active) {
     </div>
   </div>
 </footer>
-<a href="tel:+33491428602" class="mobile-cta" id="mobile-cta" aria-label="Appeler la Pizzeria Ferrari pour commander">
+<a href="tel:+33491428602" class="mobile-cta is-hidden" id="mobile-cta" aria-label="Appeler la Pizzeria Ferrari pour commander">
   <span class="mobile-cta-ico" aria-hidden="true">${ICON.phone}</span>
   <span class="mobile-cta-label">Commander</span>
 </a>
@@ -232,13 +232,20 @@ const ICON = {
   phone: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.5 2.1L8 9.6a16 16 0 0 0 6 6l1.1-1.1a2 2 0 0 1 2.1-.5c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.7 2Z"/></svg>'
 };
 
+/* ---------- Partiels injectables ---------- */
+const partialsDir = path.join(__dirname, "partials");
+const marseilleMap = fs.existsSync(path.join(partialsDir, "marseille-map.svg"))
+  ? fs.readFileSync(path.join(partialsDir, "marseille-map.svg"), "utf8").trim()
+  : "";
+
 /* ---------- Assemblage ---------- */
 const contentDir = path.join(__dirname, "pages");
 let built = [];
 for (const page of PAGES) {
   const src = path.join(contentDir, page.slug.replace(/\.html$/, ".html"));
   if (!fs.existsSync(src)) { console.warn("Contenu manquant :", src); continue; }
-  const content = fs.readFileSync(src, "utf8");
+  let content = fs.readFileSync(src, "utf8");
+  content = content.replace("{{MARSEILLE_MAP}}", marseilleMap);
   const html = head(page) + header(page.nav) + '\n<main id="main">\n' + content + "\n</main>\n" + footer(page.nav);
   fs.writeFileSync(path.join(ROOT, page.slug), html, "utf8");
   built.push(page.slug);
