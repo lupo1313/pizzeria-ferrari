@@ -241,20 +241,30 @@
   </section>
 
   <!-- ============================================================
-       NOTRE MAISON — rue Ferrari (visuel composite fourni)
-       Le titre et le paragraphe sont déjà présents DANS le visuel composite.
-       On conserve ici l'équivalent HTML sémantique (h2 + p) pour le SEO et les
-       lecteurs d'écran, sans doublon visible : pattern accessible "image de texte".
+       NOTRE MAISON — rue Ferrari
+       Illustration SANS texte (Marseille + devanture) + titre/paragraphe
+       en vrai HTML scalable, sur fond crème continu (l'illustration prolonge
+       le fond de la section, sans démarcation).
        ============================================================ -->
   <section class="section section--tight maison">
     <div class="container">
-      <h2 class="maison-sr">Au cœur du 5<sup>e</sup>, rue Ferrari</h2>
-      <p class="maison-sr">Depuis 1980, nous vous accueillons au 178 rue Ferrari, dans le 5<sup>e</sup> de Marseille. Une pizzeria familiale, conviviale, où la tradition du feu de bois se perpétue chaque jour.</p>
-      <div class="maison-scene">
-        <img class="maison-composite" src="assets/img/maison-marseille.webp" alt="Illustration du Vieux-Port de Marseille et de Notre-Dame de la Garde surplombant la devanture de la Pizzeria Ferrari, au 178 rue Ferrari dans le 5e arrondissement de Marseille" width="1312" height="1199" loading="lazy" decoding="async">
-        <a href="https://www.google.com/maps/dir/?api=1&destination=178+rue+Ferrari+13005+Marseille" target="_blank" rel="noopener" class="btn maison-find">
-          Nous trouver<span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-        </a>
+      <div class="maison-inner">
+        <div class="maison-text">
+          <p class="story-kicker">Votre pizzeria</p>
+          <h2 class="story-title">Au cœur du 5<sup>e</sup>,<br>rue Ferrari.</h2>
+          <p class="story-body-text">Depuis 1980, nous vous accueillons au 178 rue Ferrari, dans le 5<sup>e</sup> de Marseille. Une pizzeria familiale, conviviale, où la tradition du feu de bois se perpétue chaque jour.</p>
+        </div>
+        <div class="maison-scene">
+          <img class="maison-composite"
+               src="assets/img/maison-scene-1312.webp"
+               srcset="assets/img/maison-scene-820.webp 820w, assets/img/maison-scene-1312.webp 1312w"
+               sizes="(max-width:560px) 92vw, (max-width:860px) 520px, 760px"
+               alt="Illustration du Vieux-Port de Marseille et de Notre-Dame de la Garde au-dessus de la devanture de la Pizzeria Ferrari, 178 rue Ferrari dans le 5e arrondissement de Marseille"
+               width="1312" height="1199" loading="lazy" decoding="async">
+          <a href="https://www.google.com/maps/dir/?api=1&destination=178+rue+Ferrari+13005+Marseille" target="_blank" rel="noopener" class="btn maison-find">
+            Nous trouver<span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </a>
+        </div>
       </div>
     </div>
   </section>
